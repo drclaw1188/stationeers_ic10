@@ -1,0 +1,120 @@
+alias FuelPump d0
+alias ModeDisplay d1
+alias FuelDisplay d2
+alias EmptyPump d3
+alias CargoDisplay d4
+alias LaunchLever d5
+
+define OREMINER -2027419821
+define ICEMINER 74521920
+define JUNKMINER -1446002463
+define GASMINER -1969723301
+define SILO 906210602
+define COMMAND 1556756312
+define LED 1944485013
+define SORTER -1009150565
+define STACKER 1585641623
+define STACKER2 -2020231820
+define SBD 1155865682
+
+define MAXFUEL 5000
+define MINFUEL 700
+define MAXCARGO 600
+
+alias CurMode r15
+alias CurFuel r14
+alias CurCargo r13
+alias CurMinables r12
+alias LaunchReady r10
+
+start:
+s db Setting 50
+sb LED Color 2
+yield
+sb SORTER On 1
+sb STACKER On 1
+sb STACKER2 On 1
+sb SBD Open 0
+jal UpdateInfo
+# Return if rocket is already launched
+bnez CurMode return
+slt r0 CurFuel MAXFUEL
+s FuelPump On r0
+seqz LaunchReady r0
+sgtz r0 CurCargo
+sb SILO Open r0
+seqz r0 r0
+and LaunchReady LaunchReady r0
+l r0 LaunchLever Setting
+and LaunchReady LaunchReady r0
+beqz LaunchReady start
+
+sb COMMAND Activate 1
+travel:
+s db Setting 100
+sb LED Color 5
+yield
+jal UpdateInfo
+bne CurMode 4 travel
+
+sb ICEMINER Activate 1
+sb OREMINER Activate 1
+sb GASMINER Activate 1
+sb JUNKMINER Activate 1
+mining:
+s db Setting 200
+sb LED Color 3
+yield
+jal UpdateInfo
+l r0 LaunchLever Setting
+beqz r0 return
+blt CurFuel MINFUEL return
+bge CurCargo MAXCARGO return
+bnez CurMinables mining
+sb COMMAND Activate 0
+yield
+sb COMMAND Activate 2
+j travel
+
+return:
+sb COMMAND Activate 5
+wait:
+s db Setting 300
+sb LED Color 11
+yield
+jal UpdateInfo
+bnez CurMode wait
+
+Unload:
+s db Setting 400
+sb LED Color 4
+yield
+sb SORTER On 1
+sb STACKER On 1
+sb STACKER2 On 1
+sb SBD Open 1
+jal UpdateInfo
+sgtz r0 CurFuel
+s EmptyPump On r0
+sgtz r0 CurCargo
+sb SILO Open r0
+bgtz CurFuel Unload
+bgtz CurCargo Unload
+
+sleep 300 # Wait for unloading to finish
+j start
+
+UpdateInfo:
+lb CurFuel COMMAND Fuel Average
+brdns FuelDisplay 2
+s FuelDisplay Setting CurFuel
+lb CurMode COMMAND Mode Average
+brdns ModeDisplay 2
+s ModeDisplay Setting CurMode
+lb CurCargo SILO Quantity Sum
+brdns CargoDisplay 2
+s CargoDisplay Setting CurCargo
+lb CurMinables COMMAND CollectableGoods Average
+# brdns minables 2
+# s minables Setting CurMinables
+j ra
