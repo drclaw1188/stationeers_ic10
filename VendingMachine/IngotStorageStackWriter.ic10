@@ -1,0 +1,70 @@
+# Stack Size: 68
+move sp 0
+push 0
+push 100
+push 2000
+push 412924554 # Astroloy
+push 0
+push 100
+push 2000
+push 1058547521 # Constantan
+push 0
+push 200
+push 2000
+push -404336834 # Copper
+push 0
+push 100
+push 2000
+push 502280180 # Electrum
+push 0
+push 200
+push 2000
+push 226410516 # Gold
+push 0
+push 100
+push 2000
+push 1579842814 # Hastelloy
+push 0
+push 100
+push 2000
+push -787796599 # Inconel
+push 0
+push 100
+push 2000
+push -297990285 # Invar
+push 0
+push 200
+push 2000
+push -1301215609 # Iron
+push 0
+push 100
+push 2000
+push 2134647745 # Lead
+push 0
+push 100
+push 2000
+push -1406385572 # Nickel
+push 0
+push 200
+push 2000
+push -290196476 # Silicon
+push 0
+push 100
+push 2000
+push -929742000 # Silver
+push 0
+push 100
+push 2000
+push -82508479 # Solder
+push 0
+push 200
+push 2000
+push -654790771 # Steel
+push 0
+push 100
+push 2000
+push -1897868623 # Stellite
+push 0
+push 100
+push 2000
+push 156348098 # Waspaloy
