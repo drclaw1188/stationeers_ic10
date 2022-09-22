@@ -1,0 +1,105 @@
+# Madcat's advanced furnace control (simple version)
+alias HotPump d0
+alias ColdPump d1
+alias OverrideSwitch d2
+
+define FURNACE 545937711
+define BUTTON 491845673
+define DIAL 554524804
+define DISPLAY -53151617
+define LEVER 1220484876
+define UNSAFEPRESS 59000
+define SAFEPRESS 58000
+define STACKSIZE 85
+
+alias CurTemp r8
+alias CurPress r9
+alias IngotHash r10
+alias MinTemp r11
+alias MaxTemp r12
+alias MinPress r13
+alias MaxPress r14
+
+s db Setting 0
+
+start:
+yield
+
+lb CurPress FURNACE Pressure Maximum
+lb CurTemp FURNACE Temperature Maximum
+
+bgt CurPress UNSAFEPRESS SafetyFirst
+
+l r0 OverrideSwitch Setting
+bnez r0 start
+
+sb FURNACE SettingOutput 0
+sb FURNACE SettingInput 50
+s ColdPump Setting 0
+s HotPump Setting 0
+
+l r0 db Setting
+beqz r0 start
+
+move sp STACKSIZE
+FindInStack:
+pop IngotHash
+beq r0 IngotHash GetValues
+sub sp sp 4
+bgtz sp FindInStack
+
+GetValues:
+pop MaxPress
+pop MinPress
+pop MaxTemp
+pop MinTemp
+
+DoneConfig:
+# Eject ingots
+lb r0 FURNACE RecipeHash Average
+seq r1 r0 IngotHash
+lb r0 FURNACE Reagents Average
+sge r0 r0 50
+and r0 r0 r1
+sb FURNACE Open r0
+breqz r0 2
+yield
+
+# Check pressure and temp
+bgt CurPress MaxPress DecreasePress
+bgt CurTemp MaxTemp DecreaseTemp
+blt CurTemp MinTemp IncreaseTemp
+blt CurPress MinPress IncreasePress
+s ColdPump On 0
+s HotPump On 0
+j start
+
+SafetyFirst:
+sb FURNACE SettingOutput 100
+s ColdPump On 0
+s HotPump On 0
+yield
+lb CurPress FURNACE Pressure Maximum
+bgt CurPress SAFEPRESS SafetyFirst
+j start
+
+DecreasePress:
+sb FURNACE SettingOutput 50
+j start
+
+DecreaseTemp:
+s ColdPump On 1
+s ColdPump Setting 5
+j start
+
+IncreaseTemp:
+s HotPump On 1
+s HotPump Setting 5
+j start
+
+IncreasePress:
+s ColdPump On 1
+s ColdPump Setting 3
+s HotPump On 1
+s HotPump Setting 3
+j start
