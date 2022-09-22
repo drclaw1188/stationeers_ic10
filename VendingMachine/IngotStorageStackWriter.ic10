@@ -1,4 +1,4 @@
-# Stack Size: 68
+# Stack Size: 72
 move sp 0
 push 0
 push 100
@@ -68,3 +68,7 @@ push 0
 push 100
 push 2000
 push 156348098 # Waspaloy
+push 0
+push 0
+push 2000
+push -1641500434 # Reagent Mix
