@@ -1,0 +1,89 @@
+# This script displays how much of each thing listed
+# is inside a vending machine, and maintains quantities
+# Requires stack pre-programing
+# By madcat1188 , V4, Aug 10, 2022
+# Discord: notinservice
+
+alias VendingMachine1 d0
+alias VendingMachine2 d1
+alias VendingMachine3 d2
+alias Dial d3
+alias QuantityDisplay d4
+
+define STACKSIZE 44 # Change to size of stack
+define FIRSTSLOT 1
+define LASTSLOT 101
+
+alias curItem r8
+alias curCount r9
+alias CurImportCount r10
+alias CurExportCount r11
+alias SlotToCheck r12
+alias LastImportCount r14
+alias LastExportCount r15
+
+CountObjects:
+yield
+s QuantityDisplay Color 5
+move sp STACKSIZE
+sub sp sp 4
+ZeroCount:
+push 0
+sub sp sp 5
+bgez sp ZeroCount
+move r7 0
+CheckMachine:
+move SlotToCheck FIRSTSLOT
+ContinueCounting:
+add SlotToCheck SlotToCheck 1
+bgt SlotToCheck LASTSLOT DoneCounting
+# ls r1 VendingMachine SlotToCheck Occupied
+# beqz r1 ContinueCounting
+# add UsedSlots UsedSlots 1
+ls r1 dr7 SlotToCheck OccupantHash
+beqz r1 ContinueCounting
+ls r0 dr7 SlotToCheck Quantity
+move sp STACKSIZE
+FindInStack:
+beqz sp ContinueCounting
+pop curItem
+sub sp sp 2
+pop curCount
+bne r1 curItem FindInStack
+add curCount curCount r0
+push curCount
+j ContinueCounting
+DoneCounting:
+add r7 r7 1
+blt r7 3 CheckMachine
+
+main:
+yield
+
+move CurImportCount 0
+move CurExportCount 0
+move r7 0
+CheckCount:
+l r0 dr7 ImportCount
+add CurImportCount CurImportCount r0
+l r0 dr7 ExportCount
+add CurExportCount CurExportCount r0
+add r7 r7 1
+blt r7 3 CheckCount
+
+sne r1 CurImportCount LastImportCount
+move LastImportCount CurImportCount
+sne r2 CurExportCount LastExportCount
+move LastExportCount CurExportCount
+or r1 r1 r2
+bnez r1 CountObjects
+s QuantityDisplay Color 2
+l sp Dial Setting
+add sp sp 1
+mul sp sp 4
+pop curItem
+sub sp sp 2
+pop curCount
+s db Setting curItem
+s QuantityDisplay Setting curCount
+j main
