@@ -1,0 +1,113 @@
+# This script automates an Automated Oven and
+# Advanced Packaging Machine combination. It will
+# automatically cook and can the foods listed in the
+# defines below if the oven gets the necessary
+# foods in any order.
+# By madcat1188 , Nov 23, 2021
+alias Oven d0
+alias Packager d1
+alias Sorter d2
+
+# You might need to switch around the 0 and 1 below
+# depending upon how you have chutes connected
+# between the sorter and the oven.
+define FOODOUTPUT 0
+define SEEDOUTPUT 1
+
+define FOODRICE 658916791
+define COOKEDRICE 2013539020
+define CANNEDRICE -1185552595
+define FOODSOY 1924673028
+define COOKEDSOY 1353449022
+define CANNEDSOY -999714082
+define FOODCORN 258339687
+define COOKEDCORN 1344773148
+define CANNEDCORN 545034114
+define FOODPUMPKIN 1277828144
+define COOKEDPUMPKIN 1849281546
+define CANNEDPUMPKIN 1277979876
+define FOODTOMATO -998592080
+define COOKEDTOMATO -709086714
+define CANNEDTOMATO 688734890
+
+alias FoodCount r10
+alias PackagingQuantity r11
+alias RecipeWanted r12
+alias PackageWanted r13
+
+s Sorter Mode 2
+
+main:
+yield
+move PackagingQuantity 3
+move RecipeWanted COOKEDSOY
+move PackageWanted CANNEDSOY
+lr FoodCount Oven 0 Soy
+bgeal FoodCount 15 MakeCan
+move PackagingQuantity 5
+move RecipeWanted COOKEDRICE
+move PackageWanted CANNEDRICE
+lr FoodCount Oven 0 Rice
+bgeal FoodCount 15 MakeCan
+move RecipeWanted COOKEDCORN
+move PackageWanted CANNEDCORN
+lr FoodCount Oven 0 Corn
+bgeal FoodCount 5 MakeCan
+move RecipeWanted COOKEDPUMPKIN
+move PackageWanted CANNEDPUMPKIN
+lr FoodCount Oven 0 Pumpkin
+bgeal FoodCount 5 MakeCan
+move RecipeWanted COOKEDTOMATO
+move PackageWanted CANNEDTOMATO
+lr FoodCount Oven 0 Tomato
+bgeal FoodCount 5 MakeCan
+jal ManageSorter
+j main
+
+MakeCan:
+s Oven ClearMemory 1
+s Packager ClearMemory 1
+OvenStart:
+s Oven On 1
+s Oven RecipeHash 0
+yield
+s Oven RecipeHash RecipeWanted
+s db Setting RecipeWanted
+s Oven Activate 1
+OvenWait:
+yield
+l r0 Oven ExportCount
+blt r0 PackagingQuantity OvenWait
+s Oven On 0
+yield
+PackagerStart:
+s Packager On 1
+s Packager RecipeHash 0
+yield
+s Packager RecipeHash PackageWanted
+s db Setting PackageWanted
+s Packager Activate 1
+PackagerWait:
+yield
+l r0 Packager ExportCount
+beqz r0 PackagerWait
+s Packager On 0
+yield
+s db Setting 0
+j ra
+
+ManageSorter:
+yield
+ls r1 Sorter 0 Occupied
+beqz r1 ra
+ls r1 Sorter 0 OccupantHash
+beq r1 FOODRICE OutputToOven
+beq r1 FOODSOY OutputToOven
+beq r1 FOODCORN OutputToOven
+beq r1 FOODPUMPKIN OutputToOven
+beq r1 FOODTOMATO OutputToOven
+s Sorter Output SEEDOUTPUT
+j ra
+OutputToOven:
+s Sorter Output FOODOUTPUT
+j ra
