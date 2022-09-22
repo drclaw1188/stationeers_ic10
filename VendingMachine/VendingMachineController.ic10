@@ -1,0 +1,127 @@
+# This script displays how much of each thing listed
+# is inside a vending machine, and maintains quantities
+# Requires stack pre-programing
+# By madcat1188 , V4, Aug 10, 2022
+# Discord: notinservice
+
+alias VendingMachine d0
+alias QuantityDisplay d1
+alias UsedSlotsDisplay d2
+alias Dial d3
+alias ItemRequest d4 # Optional
+alias OutputSorter d5 # Optional
+
+define STACKSIZE 48 # Change to size of stack
+define FIRSTSLOT 1
+define LASTSLOT 101
+
+alias curItem r8
+alias curCount r9
+alias curMin r10
+alias curMax r11
+alias SlotToCheck r12
+alias UsedSlots r13
+alias LastImportCount r14
+alias LastExportCount r15
+
+brdns OutputSorter 2
+s OutputSorter Mode 2
+
+CountObjects:
+yield
+move SlotToCheck FIRSTSLOT
+move UsedSlots 0
+s QuantityDisplay Color 5
+s UsedSlotsDisplay Color 5
+move sp STACKSIZE
+sub sp sp 4
+ZeroCount:
+push 0
+sub sp sp 5
+bgez sp ZeroCount
+ContinueCounting:
+add SlotToCheck SlotToCheck 1
+bgt SlotToCheck LASTSLOT DoneCounting
+# ls r1 VendingMachine SlotToCheck Occupied
+# beqz r1 ContinueCounting
+# add UsedSlots UsedSlots 1
+ls r1 VendingMachine SlotToCheck OccupantHash
+beqz r1 ContinueCounting
+add UsedSlots UsedSlots 1
+ls r0 VendingMachine SlotToCheck Quantity
+move sp STACKSIZE
+FindInStack:
+beqz sp ContinueCounting
+pop curItem
+sub sp sp 2
+pop curCount
+bne r1 curItem FindInStack
+add curCount curCount r0
+push curCount
+j ContinueCounting
+DoneCounting:
+s UsedSlotsDisplay Setting UsedSlots
+move sp STACKSIZE
+CheckInventory:
+beqz sp main
+pop curItem
+pop curMax
+pop curMin
+pop curCount
+s QuantityDisplay Setting curCount
+s db Setting curItem
+brdns ItemRequest 2
+blt curCount curMin RequestMore
+bgt curCount curMax RemoveOne
+j CheckInventory
+RequestMore:
+s QuantityDisplay Color 4
+s UsedSlotsDisplay Color 4
+l LastImportCount VendingMachine ImportCount
+s ItemRequest Setting curItem
+WaitForImport:
+yield
+l r0 VendingMachine ImportCount
+beq r0 LastImportCount WaitForImport
+move LastImportCount r0
+s ItemRequest Setting 0
+j CountObjects
+RemoveOne:
+s QuantityDisplay Color 3
+s UsedSlotsDisplay Color 3
+l LastExportCount VendingMachine ExportCount
+brdns OutputSorter 2
+s OutputSorter Output 1
+s VendingMachine RequestHash 0
+yield
+s VendingMachine RequestHash curItem
+WaitForExport:
+yield
+l r0 VendingMachine ExportCount
+beq r0 LastExportCount WaitForExport
+move LastExportCount r0
+j CountObjects
+
+main:
+yield
+l r0 VendingMachine ImportCount
+sne r1 r0 LastImportCount
+move LastImportCount r0
+l r0 VendingMachine ExportCount
+sne r2 r0 LastExportCount
+move LastExportCount r0
+or r1 r1 r2
+bnez r1 CountObjects
+brdns OutputSorter 2
+s OutputSorter Output 0
+s QuantityDisplay Color 2
+s UsedSlotsDisplay Color 2
+l sp Dial Setting
+add sp sp 1
+mul sp sp 4
+pop curItem
+sub sp sp 2
+pop curCount
+s db Setting curItem
+s QuantityDisplay Setting curCount
+j main
