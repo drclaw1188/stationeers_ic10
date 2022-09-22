@@ -1,0 +1,94 @@
+# Automatic Advance Furnace Stack Writer CowsAreEvil
+# Reorganized for MadCat version
+# Stack programmer for alloy array
+# 1 - Min Temp
+# 2 - Max Temp
+# 3 - Min Pressure
+# 4 - Max Pressure
+# 5 - Alloy Hash
+
+push 905
+push 10000
+push 2005
+push 20000
+push -404336834 # Copper
+push 905
+push 10000
+push 2005
+push 20000
+push 226410516 # Gold
+push 905
+push 10000
+push 2005
+push 20000
+push -1301215609 # Iron
+push 905
+push 10000
+push 2005
+push 20000
+push 2134647745 # Lead
+push 905
+push 10000
+push 2005
+push 20000
+push -1406385572 # Nickel
+push 905
+push 10000
+push 2005
+push 20000
+push -290196476 # Silicon
+push 905
+push 10000
+push 2005
+push 20000
+push -929742000 # Silver
+push 605
+push 100000
+push 805
+push 2400
+push 502280180 # Electrum
+push 520
+push 550
+push 2005
+push 20000
+push -82508479 # Solder
+push 905
+push 100000
+push 2005
+push 20000
+push -654790771 # Steel
+push 1205
+push 1500
+push 18005
+push 20000
+push -297990285 # Invar
+push 1005
+push 10000
+push 20005
+push 30000
+push 1058547521 # Constantan
+push 705
+push 100000
+push 23505
+push 24000
+push -787796599 # Inconel
+push 1805
+push 100000
+push 10005
+push 20000
+push -1897868623 # Stellite
+push 955
+push 1000
+push 25005
+push 30000
+push 1579842814 # Hastelloy
+push 1005
+push 100000
+push 30005
+push 40000
+push 412924554 # Astroloy
+push 605
+push 800
+push 50005
+push 51000
+push 156348098 # Waspaloy
