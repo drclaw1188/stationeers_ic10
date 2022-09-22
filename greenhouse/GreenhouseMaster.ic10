@@ -1,0 +1,67 @@
+alias InsideSensor d0
+alias OxygenPump d1
+alias NitrogenPump d2
+alias CO2Pump d3
+alias GreenhouseFilt d4
+
+alias OxygenPercent r15
+alias CO2Percent r14
+alias InsidePressure r13
+alias InsideTemp r12
+
+define MINO2 0.3
+define MINCO2 0.05
+define MINPRESS 100
+
+define FLASHINGLIGHT -1535893860
+define ALARMVOLATILES 0.05
+define ALARMPOLLUTANTS 0.05
+define ALARMOXYGEN 0.25
+define ALARMCO2 0.01
+define ALARMCOLD 280
+define ALARMHOT 315
+define ALARMHIGHPRESS 120
+define ALARMLOWPRESS 40
+
+start:
+yield
+
+l OxygenPercent InsideSensor RatioOxygen
+l CO2Percent InsideSensor RatioCarbonDioxide
+l InsidePressure InsideSensor Pressure
+l InsideTemp InsideSensor Temperature
+
+slt r0 OxygenPercent MINO2
+s OxygenPump On r0
+
+slt r0 CO2Percent MINCO2
+s CO2Pump On r0
+
+slt r0 InsidePressure MINPRESS
+s NitrogenPump On r0
+
+l r0 InsideSensor RatioVolatiles
+sgt r0 r0 ALARMVOLATILES
+l r1 InsideSensor RatioPollutant
+sgt r1 r1 ALARMPOLLUTANTS
+or r0 r0 r1
+slt r1 OxygenPercent ALARMOXYGEN
+or r0 r0 r1
+slt r1 CO2Percent ALARMCO2
+or r0 r0 r1
+sgt r1 InsideTemp ALARMHOT
+or r0 r0 r1
+slt r1 InsideTemp ALARMCOLD
+or r0 r0 r1
+sgt r1 InsidePressure ALARMHIGHPRESS
+or r0 r0 r1
+slt r1 InsidePressure ALARMLOWPRESS
+or r0 r0 r1
+ls r1 GreenhouseFilt 0 Quantity
+ls r2 GreenhouseFilt 1 Quantity
+and r1 r1 r2
+seq r1 r1 0
+or r0 r0 r1
+sb FLASHINGLIGHT On r0
+
+j start
