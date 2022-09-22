@@ -1,0 +1,114 @@
+alias RequestMem d0
+alias Autolathe d1
+alias PipeBender d2
+alias Electronics d3
+alias Tools d4
+alias SorterChip d5
+
+define MINIMUMINGOT 50
+define VENDINGMACHINE -443130773
+define INGOTSTEEL -654790771
+
+alias IngotNeeded r11
+alias LastImportCount r12
+
+start:
+yield
+
+l IngotNeeded RequestMem Setting
+beqal IngotNeeded INGOTSTEEL ManageRequest
+
+move r9 1
+jal CheckPrinter
+move r9 2
+jal CheckPrinter
+move r9 3
+jal CheckPrinter
+move r9 4
+jal CheckPrinter
+j start
+
+CheckPrinter:
+move IngotNeeded 0
+lr r0 dr9 Contents Iron
+slt r0 r0 MINIMUMINGOT
+select IngotNeeded r0 -1301215609 IngotNeeded
+lr r0 dr9 Required Iron
+select IngotNeeded r0 -1301215609 IngotNeeded
+lr r0 dr9 Contents Copper
+slt r0 r0 MINIMUMINGOT
+select IngotNeeded r0 -404336834 IngotNeeded
+lr r0 dr9 Required Copper
+select IngotNeeded r0 -404336834 IngotNeeded
+lr r0 dr9 Contents Gold
+slt r0 r0 MINIMUMINGOT
+select IngotNeeded r0 226410516 IngotNeeded
+lr r0 dr9 Required Gold
+select IngotNeeded r0 226410516 IngotNeeded
+lr r0 dr9 Required Lead
+select IngotNeeded r0 2134647745 IngotNeeded
+lr r0 dr9 Required Nickel
+select IngotNeeded r0 -1406385572 IngotNeeded
+lr r0 dr9 Contents Silicon
+slt r0 r0 MINIMUMINGOT
+select IngotNeeded r0 -290196476 IngotNeeded
+lr r0 dr9 Required Silicon
+select IngotNeeded r0 -290196476 IngotNeeded
+lr r0 dr9 Required Silver
+select IngotNeeded r0 -929742000 IngotNeeded
+lr r0 dr9 Required Constantan
+select IngotNeeded r0 1058547521 IngotNeeded
+lr r0 dr9 Required Electrum
+select IngotNeeded r0 502280180 IngotNeeded
+lr r0 dr9 Required Invar
+select IngotNeeded r0 -297990285 IngotNeeded
+lr r0 dr9 Required Solder
+select IngotNeeded r0 -82508479 IngotNeeded
+lr r0 dr9 Contents Steel
+slt r0 r0 MINIMUMINGOT
+select IngotNeeded r0 -654790771 IngotNeeded
+lr r0 dr9 Required Steel
+select IngotNeeded r0 -654790771 IngotNeeded
+lr r0 dr9 Required Astroloy
+select IngotNeeded r0 412924554 IngotNeeded
+lr r0 dr9 Required Hastelloy
+select IngotNeeded r0 1579842814 IngotNeeded
+lr r0 dr9 Required Inconel
+select IngotNeeded r0 -787796599 IngotNeeded
+lr r0 dr9 Required Stellite
+select IngotNeeded r0 -1897868623 IngotNeeded
+lr r0 dr9 Required Waspaloy
+select IngotNeeded r0 156348098 IngotNeeded
+s db Setting IngotNeeded
+
+beqz IngotNeeded ra
+
+sb VENDINGMACHINE RequestHash 0
+s SorterChip Setting r9
+l LastImportCount dr9 ImportCount
+yield
+sb VENDINGMACHINE RequestHash IngotNeeded
+
+WaitForDelivery:
+yield
+l r0 dr9 ImportCount
+beq r0 LastImportCount WaitForDelivery
+
+s SorterChip Setting 0
+yield
+j ra
+
+ManageRequest:
+sb VENDINGMACHINE RequestHash 0
+s SorterChip Setting 5
+yield
+sb VENDINGMACHINE RequestHash IngotNeeded
+
+WaitForMemory:
+yield
+l r0 RequestMem Setting
+bnez r0 WaitForMemory
+
+s SorterChip Setting 0
+yield
+j ra
