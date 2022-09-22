@@ -1,0 +1,48 @@
+alias AutoLathe d0
+alias AutoLatheStacker d1
+alias ElectronicsPrinter d2
+alias ElectronicsStacker d3
+alias PipeBender d4
+alias PipeBenderStacker d5
+
+alias AutoLatheCounter r10
+alias ElectronicsCounter r11
+alias PipeBenderCounter r12
+alias AutoLatheExports r13
+alias ElectronicsExports r14
+alias PipeBenderExports r15
+
+main:
+yield
+
+l r0 AutoLathe Activate
+brnez r0 3
+l AutoLatheCounter AutoLatheStacker Setting
+l AutoLatheExports AutoLathe ExportCount
+breqz r0 5
+l r0 AutoLathe ExportCount
+sub r0 r0 AutoLatheExports
+slt r0 r0 AutoLatheCounter
+s AutoLathe Activate r0
+
+l r0 ElectronicsPrinter Activate
+brnez r0 3
+l ElectronicsCounter ElectronicsStacker Setting
+l ElectronicsExports ElectronicsPrinter ExportCount
+breqz r0 5
+l r0 ElectronicsPrinter ExportCount
+sub r0 r0 ElectronicsExports
+slt r0 r0 ElectronicsCounter
+s ElectronicsPrinter Activate r0
+
+l r0 PipeBender Activate
+brnez r0 3
+l PipeBenderCounter PipeBenderStacker Setting
+l PipeBenderExports PipeBender ExportCount
+breqz r0 5
+l r0 PipeBender ExportCount
+sub r0 r0 PipeBenderExports
+slt r0 r0 PipeBenderCounter
+s PipeBender Activate r0
+
+j main
