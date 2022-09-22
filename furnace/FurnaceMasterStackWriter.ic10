@@ -1,0 +1,126 @@
+# Stack programmer for furnace vending control
+# 1 - Alloy Hash
+# 2/3 - Ore #1 & Quantity
+# 4/5 - Ore #2 & Quantity
+# 6/7 - Ore #3 & Qunatity
+
+move sp 0
+push -404336834 # Copper
+push -707307845
+push 1
+push 0
+push 0
+push 0
+push 0
+push 226410516 # Gold
+push -1348105509
+push 1
+push 0
+push 0
+push 0
+push 0
+push -1301215609 # Iron
+push 1758427767
+push 1
+push 0
+push 0
+push 0
+push 0
+push 2134647745 # Lead
+push -190236170
+push 1
+push 0
+push 0
+push 0
+push 0
+push -1406385572 # Nickel
+push 1830218956
+push 1
+push 0
+push 0
+push 0
+push 0
+push -290196476 # Silicon
+push 1103972403
+push 1
+push 0
+push 0
+push 0
+push 0
+push -929742000 # Silver
+push -916518678
+push 1
+push 0
+push 0
+push 0
+push 0
+push 502280180 # Electrum
+push -1348105509
+push 1
+push -916518678
+push 1
+push 0
+push 0
+push -82508479 # Solder
+push 1758427767
+push 1
+push -190236170
+push 1
+push 0
+push 0
+push -654790771 # Steel
+push 1758427767
+push 3
+push 1724793494
+push 1
+push 0
+push 0
+push -297990285 # Invar
+push 1758427767
+push 1
+push 1830218956
+push 1
+push 0
+push 0
+push 1058547521 # Constantan
+push 1830218956
+push 1
+push -707307845
+push 1
+push 0
+push 0
+push -787796599 # Inconel
+push -1348105509
+push 2
+push -654790771
+push 1
+push 1830218956
+push 1
+push -1897868623 # Stellite
+push -916518678
+push 1
+push 1103972403
+push 2
+push -983091249
+push 1
+push 1579842814 # Hastelloy
+push 1830218956
+push 1
+push -916518678
+push 2
+push -983091249
+push 1
+push 412924554 # Astroloy
+push -707307845
+push 1
+push -654790771
+push 2
+push -983091249
+push 1
+push 156348098 # Waspaloy
+push -916518678
+push 1
+push 1830218956
+push 1
+push -190236170
+push 2
