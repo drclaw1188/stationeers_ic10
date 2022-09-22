@@ -1,0 +1,46 @@
+# Stack Size: 48
+move sp 0
+push 0
+push 0
+push 500
+push 1724793494 # Coal
+push 0
+push 0
+push 300
+push -983091249 # Cobalt
+push 0
+push 0
+push 700
+push -707307845 # Copper
+push 0
+push 0
+push 700
+push -1348105509 # Gold
+push 0
+push 0
+push 700
+push 1758427767 # Iron
+push 0
+push 0
+push 300
+push -190236170 # Lead
+push 0
+push 0
+push 300
+push 1830218956 # Nickel
+push 0
+push 0
+push 700
+push 1103972403 # Silicon
+push 0
+push 0
+push 300
+push -916518678 # Silver
+push 0
+push 0
+push 500
+push -654790771 # Steel
+push 0
+push 0
+push 0
+push -1516581844 # Uranium
