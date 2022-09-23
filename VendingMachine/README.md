@@ -8,7 +8,7 @@ Displays amount of each item in a vending machine and number of slots used, and 
 
 The devices are:
 
-| Device Name | Device Number | Desscription | Requuired? |
+| Device Name | Device Number | Desscription | Required? |
 | ----------- | ------------- | ------------ | ---------- |
 | VendingMachine | d0 | The vending machine to control. | Required. |
 | QuantityDisplay | d1 | An LED display to display the quantity of the selected item. | Required. |
