@@ -8,12 +8,12 @@ Displays amount of each item in a vending machine and number of slots used, and 
 
 The devices are:
 
-VendingMachine d0 - The vending machine to control. Required.
-QuantityDisplay d1 - An LED display to display the quantity of the selected item. Required.
-UsedSlotsDisplay d2 - An LED display to display the number of slots used in the vending machine. Required.
-ItemRequest d3 - An external memory (or other device) to tell an external system to produce an item. Optional.
-OutputSorter d4 - A sorter to sort ejected items if there is too much of a certain item in the vending machine. Optional.
-VendButton d5 - A button to press to vend the selected item. Optional.
+* VendingMachine d0 - The vending machine to control. Required.
+* QuantityDisplay d1 - An LED display to display the quantity of the selected item. Required.
+* UsedSlotsDisplay d2 - An LED display to display the number of slots used in the vending machine. Required.
+* ItemRequest d3 - An external memory (or other device) to tell an external system to produce an item. Optional.
+* OutputSorter d4 - A sorter to sort ejected items if there is too much of a certain item in the vending machine. Optional.
+* VendButton d5 - A button to press to vend the selected item. Optional.
 
 A dial is batch read to select the item. It is theoretically optional, but without it you won't be able to change the selected item. You should also create a console with a hash display and configure it to read the IC10 housing, so you can see what item is currently selected.
 
