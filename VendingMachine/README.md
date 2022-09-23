@@ -47,4 +47,12 @@ Take a look at my [Ingot Storage Stack Writer](https://github.com/drclaw1188/sta
 
 ### What if you don't want a minimum or maximum?
 
-If you just want to use Vending_Machine_Controller.ic10 to attempt to keep a minimum number of items in the vending machine, and not bother with a maximum, simply set all the maximum values to unreasonably high values, like 9999999 or something like that, when doing the stack pre-programming. Conversely, if you want the script to only eject items at a maximum, set all the minimum values to zero during stack pre-programming.  
+If you just want to use Vending_Machine_Controller.ic10 to attempt to keep a minimum number of items in the vending machine, and not bother with a maximum, simply set all the maximum values to unreasonably high values, like 9999999 or something like that, when doing the stack pre-programming. Conversely, if you want the script to only eject items at a maximum, set all the minimum values to zero during stack pre-programming.
+
+### The LED displays stay yellow for too long or script is too slow
+
+Unfortunately, this line:
+
+```ls r0 VendingMachine SlotToCheck Quantity```
+
+is very slow to return, however, I don't know of any other way to get the quantity of items in a slot from a vending machine.
