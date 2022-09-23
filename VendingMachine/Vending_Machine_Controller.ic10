@@ -1,8 +1,8 @@
 # This script displays how much of each thing listed
 # is inside a vending machine, and maintains quantities
 # Requires stack pre-programing
-# By madcat1188 , V4, Aug 10, 2022
-# Discord: notinservice
+# See https://github.com/drclaw1188/stationeers_ic10/tree/main/VendingMachine for more information
+# Contact me on Discord: notinservice
 
 alias VendingMachine d0
 alias QuantityDisplay d1
