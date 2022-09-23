@@ -13,6 +13,7 @@ define LEVER 1220484876
 define UNSAFEPRESS 59000
 define SAFEPRESS 58000
 define STACKSIZE 85
+define MININGOTSTACK 50
 
 alias CurTemp r8
 alias CurPress r9
@@ -21,8 +22,6 @@ alias MinTemp r11
 alias MaxTemp r12
 alias MinPress r13
 alias MaxPress r14
-
-s db Setting 0
 
 start:
 yield
@@ -40,17 +39,13 @@ sb FURNACE SettingInput 50
 s ColdPump Setting 0
 s HotPump Setting 0
 
-l r0 db Setting
-beqz r0 start
-
-move sp STACKSIZE
-FindInStack:
+l sp Dial Setting
+add sp sp 1
+mul sp sp 5
 pop IngotHash
-beq r0 IngotHash GetValues
-sub sp sp 4
-bgtz sp FindInStack
-
-GetValues:
+s db Setting IngotHash
+l r0 Button Setting
+beqz r0 DoneConfig
 pop MaxPress
 pop MinPress
 pop MaxTemp
@@ -61,7 +56,7 @@ DoneConfig:
 lb r0 FURNACE RecipeHash Average
 seq r1 r0 IngotHash
 lb r0 FURNACE Reagents Average
-sge r0 r0 50
+sge r0 r0 MININGOTSTACK
 and r0 r0 r1
 sb FURNACE Open r0
 breqz r0 2
