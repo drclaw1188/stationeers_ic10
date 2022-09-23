@@ -10,12 +10,12 @@ The devices are:
 
 | Device Name | Device Number | Desscription | Required? |
 | ----------- | ------------- | ------------ | ---------- |
-| VendingMachine | d0 | The vending machine to control. | Required. |
-| QuantityDisplay | d1 | An LED display to display the quantity of the selected item. | Required. |
-| UsedSlotsDisplay | d2 | An LED display to display the number of slots used in the vending machine. | Required. |
-| Dial | d3 | The dial to select which item of which you want to show the quantity . | Required. |
-| ItemRequest | d4 | An external memory (or other device) to tell an external system to produce an item. | Optional. |
-| OutputSorter | d5 | A sorter to sort ejected items if there is too much of a certain item in the vending machine. | Optional. |
+| VendingMachine | d0 | The vending machine to control. | Required |
+| QuantityDisplay | d1 | An LED display to display the quantity of the selected item. | Required |
+| UsedSlotsDisplay | d2 | An LED display to display the number of slots used in the vending machine. | Required |
+| Dial | d3 | The dial to select which item of which you want to show the quantity. | Required |
+| ItemRequest | d4 | An external memory (or other device) to tell an external system to produce an item. | Optional |
+| OutputSorter | d5 | A sorter to sort ejected items if there is too much of a certain item in the vending machine. | Optional |
 
 A dial is used to select which item has its quantity displayed in the QuantityDisplay LED. You should also create a console with a hash display and configure it to read the IC10 housing, so you can see what item is currently selected.
 
@@ -31,15 +31,15 @@ If the minimum and maximum for all the items is satisfied, the script goes into 
 
 To program the stack, you need to load a program that has many 'push' commands in it on to the chip, then just power up the chip for a second or so, and the stack is then programmed. After you program the stack, you can then load a different program on to the chip and run it, and the stack will be preserved. The stack format is:
 
-Item #1 Quantity
-Item #1 Minimum
-Item #1 Maximum
-Item #1 ItemHash
-Item #2 Quantity
-Item #2 Minimum
-Item #2 Maximum
-Item #2 ItemHash
-...
+- Item #1 Quantity
+- Item #1 Minimum
+- Item #1 Maximum
+- Item #1 ItemHash
+- Item #2 Quantity
+- Item #2 Minimum
+- Item #2 Maximum
+- Item #2 ItemHash
+- ...
 
 The quantity values should always be zero, but they could theoretically be any number you want, as whatever is in that location in the stack will be overritten. It just needs to have that push command to preserve the spot in the stack.
 The define "STACKSIZE" in Vending_Machine_Controller.ic10 needs to be changed to the number of push lines in the stack writer script.
