@@ -1,6 +1,5 @@
-# Automatic Advance Furnace Stack Writer CowsAreEvil
-# Reorganized for MadCat version
-# Stack programmer for alloy array
+# Thanks to CowsAreEvil for the data here
+# Stack programmer for Furnace_Controller and Furnace_Control_Simple
 # 1 - Min Temp
 # 2 - Max Temp
 # 3 - Min Pressure
