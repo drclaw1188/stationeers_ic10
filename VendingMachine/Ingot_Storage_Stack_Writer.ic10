@@ -1,74 +1,94 @@
+# See https://github.com/drclaw1188/stationeers_ic10/tree/main/VendingMachine for more information
 # Stack Size: 72
+
 move sp 0
-push 0
-push 100
-push 2000
-push 412924554 # Astroloy
-push 0
-push 100
-push 2000
-push 1058547521 # Constantan
-push 0
-push 200
-push 2000
-push -404336834 # Copper
-push 0
-push 100
-push 2000
-push 502280180 # Electrum
-push 0
-push 200
-push 2000
-push 226410516 # Gold
-push 0
-push 100
-push 2000
-push 1579842814 # Hastelloy
-push 0
-push 100
-push 2000
-push -787796599 # Inconel
-push 0
-push 100
-push 2000
-push -297990285 # Invar
-push 0
-push 200
-push 2000
-push -1301215609 # Iron
-push 0
-push 100
-push 2000
-push 2134647745 # Lead
-push 0
-push 100
-push 2000
-push -1406385572 # Nickel
-push 0
-push 200
-push 2000
-push -290196476 # Silicon
-push 0
-push 100
-push 2000
-push -929742000 # Silver
-push 0
-push 100
-push 2000
-push -82508479 # Solder
-push 0
-push 200
-push 2000
-push -654790771 # Steel
-push 0
-push 100
-push 2000
-push -1897868623 # Stellite
-push 0
-push 100
-push 2000
-push 156348098 # Waspaloy
-push 0
-push 0
-push 2000
-push -1641500434 # Reagent Mix
+
+push 0           # Always zero
+push 100         # Astroloy Minimum
+push 2000        # Astroloy Maximum
+push 412924554   # Astroloy Hash
+
+push 0           # Always zero
+push 100         # Constantan Minimum
+push 2000        # Constantan Maximum
+push 1058547521  # Constantan Hash
+
+push 0           # Always zero
+push 200         # Copper Minimum
+push 2000        # Copper Maximum
+push -404336834  # Copper Hash
+
+push 0           # Always zero
+push 100         # Electrum Minimum
+push 2000        # Electrum Maximum
+push 502280180   # Electrum Hash
+
+push 0           # Always zero
+push 200         # Gold Minimum
+push 2000        # Gold Maximum
+push 226410516   # Gold Hash
+
+push 0           # Always zero
+push 100         # Hastelloy Minimum
+push 2000        # Hastelloy Maximum
+push 1579842814  # Hastelloy Hash
+
+push 0           # Always zero
+push 100         # Inconel Minimum
+push 2000        # Inconel Maximum
+push -787796599  # Inconel Hash
+
+push 0           # Always zero
+push 100         # Invar Minimum
+push 2000        # Invar Maximum
+push -297990285  # Invar Hash
+
+push 0           # Always zero
+push 200         # Iron Minimum
+push 2000        # Iron Maximum
+push -1301215609 # Iron Hash
+
+push 0           # Always zero
+push 100         # Lead Minimum
+push 2000        # Lead Maximum
+push 2134647745  # Lead Hash
+
+push 0           # Always zero
+push 100         # Nickel Minimum
+push 2000        # Nickel Maximum
+push -1406385572 # Nickel Hash
+
+push 0           # Always zero
+push 200         # Silicon Minimum
+push 2000        # Silicon Maximum
+push -290196476  # Silicon Hash
+
+push 0           # Always zero
+push 100         # Silver Minimum
+push 2000        # Silver Maximum
+push -929742000  # Silver Hash
+
+push 0           # Always zero
+push 100         # Solder Minimum
+push 2000        # Solder Maximum
+push -82508479   # Solder Hash
+
+push 0           # Always zero
+push 200         # Steel Minimum
+push 2000        # Steel Maximum
+push -654790771  # Steel Hash
+
+push 0           # Always zero
+push 100         # Stellite Minimum
+push 2000        # Stellite Maximum
+push -1897868623 # Stellite Hash
+
+push 0           # Always zero
+push 100         # Waspaloy Minimum
+push 2000        # Waspaloy Maximum
+push 156348098   # Waspaloy Hash
+
+push 0           # Always zero
+push 0           # Reagent Mix Minimum
+push 2000        # Reagent Mix Maximum
+push -1641500434 # Reagent Mix Hash
