@@ -1,0 +1,21 @@
+alias ProximitySensor d0
+alias WeatherStation d1
+alias WeatherTimeLED d2
+
+define BEACON -188177083
+define FLASHINGLIGHTS -1535893860
+
+start:
+yield
+
+l r0 ProximitySensor Quantity
+seqz r0 r0
+sb BEACON On r0
+
+l r0 WeatherStation Mode
+sb FLASHINGLIGHTS On r0
+
+l r0 WeatherStation NextWeatherEventTime
+s WeatherTimeLED Setting r0
+
+j start
