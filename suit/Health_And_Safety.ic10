@@ -1,0 +1,53 @@
+# Hardsuit safety system.  Based on CowsAreEvil version
+alias Suit db
+alias Helmet d0
+alias Backpack d1
+
+alias Safe r10
+
+define MAXVOLATILES 0.02
+define MAXVOLATILES 0.02
+define MAXN2O 0.02
+define MINTEMP 273
+define MAXTEMP 323
+define MINPRESS 45
+define MAXPRESS 150
+
+start:
+yield
+
+# Detect Safety
+l r0 Suit RatioVolatiles
+slt Safe r0 MAXVOLATILES
+l r0 Suit RatioPollutant
+slt r1 r0 MAXVOLATILES
+and Safe Safe r1
+l r0 Suit RatioNitrousOxide
+slt r1 r0 MAXN2O
+and Safe Safe r1
+l r0 Suit TemperatureExternal
+sgt r1 r0 MINTEMP
+and Safe Safe r1
+slt r1 r0 MAXTEMP
+and Safe Safe r1
+l r0 Suit PressureExternal
+sgt r1 r0 MINPRESS
+and Safe Safe r1
+slt r1 r0 MAXPRESS
+and Safe Safe r1
+
+# Close and lock helmet if it is unsafe
+l r0 Helmet Open
+breqz r0 2
+s Helmet Open Safe
+seqz r0 Safe
+s Helmet Lock r0
+
+# Turn off AC and filtration if helmet is open
+l r0 Helmet Open
+seqz r0 r0
+s Suit AirRelease r0
+s Suit Filtration r0
+s Suit On r0
+
+j start
