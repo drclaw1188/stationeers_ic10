@@ -6,7 +6,7 @@ alias Backpack d1
 alias Safe r10
 
 define MAXVOLATILES 0.02
-define MAXVOLATILES 0.02
+define MAXPOLLUTANT 0.02
 define MAXN2O 0.02
 define MINTEMP 273
 define MAXTEMP 323
@@ -20,7 +20,7 @@ yield
 l r0 Suit RatioVolatiles
 slt Safe r0 MAXVOLATILES
 l r0 Suit RatioPollutant
-slt r1 r0 MAXVOLATILES
+slt r1 r0 MAXPOLLUTANT
 and Safe Safe r1
 l r0 Suit RatioNitrousOxide
 slt r1 r0 MAXN2O
