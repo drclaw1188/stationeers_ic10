@@ -5,7 +5,7 @@ alias LEDPercent d3
 alias LEDConsumed d4
 alias LEDProduced d5
 
-alias PercentColor d10
+alias PercentColor r10
 
 define SOLARPANEL -2045627372
 define BATTERY -1388288459
@@ -27,14 +27,15 @@ s SolarVertical Setting r0
 
 move PercentColor 4 # Red
 lb r0 BATTERY Mode Average
-sgt r1 r0 5
-select PercentColor r0 0 PercentColor # Blue
-sgt r1 r0 4
-select PercentColor r0 2 PercentColor # Green
-sgt r1 r0 3
-select PercentColor r0 5 PercentColor # Yellow
+s db Setting r0
 sgt r1 r0 2
-select PercentColor r0 3 PercentColor # Orange
+select PercentColor r1 3 PercentColor # Orange
+sgt r1 r0 3
+select PercentColor r1 5 PercentColor # Yellow
+sgt r1 r0 4
+select PercentColor r1 2 PercentColor # Green
+sgt r1 r0 5
+select PercentColor r1 0 PercentColor # Blue
 s LEDPercent Color PercentColor
 
 lb r0 BATTERY Ratio Average
