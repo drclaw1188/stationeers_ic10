@@ -25,9 +25,17 @@ l r0 DaylightSensor Vertical
 sub r0 90 r0
 s SolarVertical Setting r0
 
+move PercentColor 4 # Red
 lb r0 BATTERY Mode Average
-seq r1 r0 6
-select PercentColor r0 
+sgt r1 r0 5
+select PercentColor r0 0 PercentColor # Blue
+sgt r1 r0 4
+select PercentColor r0 2 PercentColor # Green
+sgt r1 r0 3
+select PercentColor r0 5 PercentColor # Yellow
+sgt r1 r0 2
+select PercentColor r0 3 PercentColor # Orange
+s LEDPercent Color PercentColor
 
 lb r0 BATTERY Ratio Average
 s LEDPercent Setting r0
