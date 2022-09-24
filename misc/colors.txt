@@ -1,0 +1,12 @@
+0  = Blue
+1  = Grey
+2  = Green
+3  = Orange
+4  = Red
+5  = Yellow
+6  = White
+7  = Black
+8  = Brown
+9  = Khaki
+10 = Pink
+11 = Purple
