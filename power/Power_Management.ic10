@@ -1,0 +1,41 @@
+alias DaylightSensor d0
+alias SolarVertical d1
+alias SolarHorizonal d2
+alias LEDPercent d3
+alias LEDConsumed d4
+alias LEDProduced d5
+
+alias PercentColor d10
+
+define SOLARPANEL -2045627372
+define BATTERY -1388288459
+
+s LEDPercent Mode 1
+s LEDConsumed Mode 2
+s LEDProduced Mode 2
+
+start:
+yield
+
+l r0 DaylightSensor Horizontal
+sub r0 r0 90
+s SolarHorizonal Setting r0
+
+l r0 DaylightSensor Vertical
+sub r0 90 r0
+s SolarVertical Setting r0
+
+lb r0 BATTERY Mode Average
+seq r1 r0 6
+select PercentColor r0 
+
+lb r0 BATTERY Ratio Average
+s LEDPercent Setting r0
+
+lb r0 BATTERY PowerActual Average
+s LEDConsumed Setting r0
+
+lb r0 BATTERY PowerPotential Average
+s LEDProduced Setting r0
+
+j start
