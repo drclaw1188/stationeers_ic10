@@ -15,6 +15,13 @@ alias PipeBenderExports r15
 main:
 yield
 
+l r0 AutoLathe On
+s AutoLatheStacker On r0
+l r0 ElectronicsPrinter On
+s ElectronicsStacker On r0
+l r0 PipeBender On
+s PipeBenderStacker On r0
+
 l r0 AutoLathe Activate
 brnez r0 3
 l AutoLatheCounter AutoLatheStacker Setting
