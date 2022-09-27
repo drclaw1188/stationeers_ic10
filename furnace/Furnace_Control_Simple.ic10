@@ -76,23 +76,17 @@ DisabledMode:
 s ColdPump On 0
 s HotPump On 0
 s ExhaustPump On 0
-bgtal CurPress EMPTYPRESS EmptyFurnace
-sb FURNACE On 0
+sb FURNACE SettingOutput 100
+lb CurPress FURNACE Pressure Maximum
+sgt r0 CurPress EMPTYPRESS
+sb FURNACE On r0
 j start
 
-EmptyFurnace:
-sb FURNACE SettingOutput 100
-yield
-lb CurPress FURNACE Pressure Maximum
-bgt CurPress EMPTYPRESS EmptyFurnace
-sb FURNACE SettingOutput 0
-j ra
-
 SafetyFirst:
-sb FURNACE SettingOutput 100
 s ColdPump On 0
 s HotPump On 0
 s ExhaustPump On 0
+sb FURNACE SettingOutput 100
 yield
 lb CurPress FURNACE Pressure Maximum
 bgt CurPress SAFEPRESS SafetyFirst
