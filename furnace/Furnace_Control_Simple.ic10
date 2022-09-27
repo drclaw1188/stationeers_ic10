@@ -1,15 +1,12 @@
 # Madcat's advanced furnace control (simple version)
 alias HotPump d0
 alias ColdPump d1
-alias OverrideSwitch d2
-alias Dial d3
-alias Button d4
+alias ExhaustPump d2
+alias OverrideLever d3
+alias EngageLever d4
+alias Dial d5
 
 define FURNACE 545937711
-define BUTTON 491845673
-define DIAL 554524804
-define DISPLAY -53151617
-define LEVER 1220484876
 define UNSAFEPRESS 59000
 define SAFEPRESS 58000
 define STACKSIZE 85
@@ -31,27 +28,32 @@ lb CurTemp FURNACE Temperature Maximum
 
 bgt CurPress UNSAFEPRESS SafetyFirst
 
-l r0 OverrideSwitch Setting
+l r0 OverrideLever Setting
 bnez r0 start
 
+l r0 EngageLever Setting
+beqz r0 DisabledMode
+
+sb FURNACE On 1
 sb FURNACE SettingOutput 0
 sb FURNACE SettingInput 50
+s ColdPump On 1
+s HotPump On 1
+s ExhaustPump On 1
 s ColdPump Setting 0
 s HotPump Setting 0
+s ExhaustPump Setting 0
 
 l sp Dial Setting
 add sp sp 1
 mul sp sp 5
 pop IngotHash
-s db Setting IngotHash
-l r0 Button Setting
-beqz r0 DoneConfig
 pop MaxPress
 pop MinPress
 pop MaxTemp
 pop MinTemp
+s db Setting IngotHash
 
-DoneConfig:
 # Eject ingots
 lb r0 FURNACE RecipeHash Average
 seq r1 r0 IngotHash
@@ -64,17 +66,32 @@ yield
 
 # Check pressure and temp
 bgt CurPress MaxPress DecreasePress
+blt CurPress MinPress IncreasePress
 bgt CurTemp MaxTemp DecreaseTemp
 blt CurTemp MinTemp IncreaseTemp
-blt CurPress MinPress IncreasePress
+j start
+
+DisabledMode:
 s ColdPump On 0
 s HotPump On 0
+s ExhaustPump On 0
+bgtal CurPress EMPTYPRESS EmptyFurnace
+sb FURNACE On 0
 j start
+
+EmptyFurnace:
+sb FURNACE SettingOutput 100
+yield
+lb CurPress FURNACE Pressure Maximum
+bgt CurPress EMPTYPRESS EmptyFurnace
+sb FURNACE SettingOutput 0
+j ra
 
 SafetyFirst:
 sb FURNACE SettingOutput 100
 s ColdPump On 0
 s HotPump On 0
+s ExhaustPump On 0
 yield
 lb CurPress FURNACE Pressure Maximum
 bgt CurPress SAFEPRESS SafetyFirst
@@ -85,18 +102,13 @@ sb FURNACE SettingOutput 50
 j start
 
 DecreaseTemp:
-s ColdPump On 1
 s ColdPump Setting 5
 j start
 
 IncreaseTemp:
-s HotPump On 1
 s HotPump Setting 5
 j start
 
 IncreasePress:
-s ColdPump On 1
-s ColdPump Setting 3
-s HotPump On 1
-s HotPump Setting 3
+s ExhaustPump Setting 10
 j start
