@@ -7,6 +7,7 @@ alias EngageLever d4
 alias Dial d5
 
 define FURNACE 545937711
+define EMPTYPRESS 10
 define UNSAFEPRESS 59000
 define SAFEPRESS 58000
 define STACKSIZE 85
