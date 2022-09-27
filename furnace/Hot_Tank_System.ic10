@@ -6,20 +6,22 @@ alias SafetyValve d4
 
 alias CurTemp r8
 alias CurPress r9
-alias HotTemp d10
-alias HotPress d11
+alias HotTemp r10
+alias HotPress r11
 
 define MINHOTTEMP 2000
 define MINHOTPRESS 5000
-define MAXHOTPRESS 10000
+define MAXHOTPRESS 20000
 define MINFURPRESS 2000
+define EMPTYPRESS 10
 define UNSAFEPRESS 59000
 define SAFEPRESS 58000
 
 s HotPump Setting 100
-s FuelPump Setting 5
+s FuelPump Setting 25
 
 start:
+s db Setting 0
 yield
 
 l CurPress Furnace Pressure
@@ -38,9 +40,10 @@ or r0 r0 r1
 slt r1 HotPress MAXHOTPRESS
 and r0 r0 r1
 
-beqz start
+beqz r0 start
 
 HeatUp:
+s db Setting 1
 yield
 l CurPress Furnace Pressure
 l CurTemp Furnace Temperature
@@ -60,19 +63,21 @@ s FuelPump On 0
 s HotPump On 1
 
 EmptyTank:
+s db Setting 2
 yield
 l CurPress Furnace Pressure
-bgz CurPress EmptyTank
+bgt CurPress EMPTYPRESS EmptyTank
 
 s HotPump On 0
 
 j start
 
 SafetyFirst:
+s db Setting 10
 s HotPump On 0
 s FuelPump On 0
 s SafetyValve On 1
 yield
-lb CurPress FURNACE Pressure Maximum
+l CurPress Furnace Pressure
 bgt CurPress SAFEPRESS SafetyFirst
 j ra
