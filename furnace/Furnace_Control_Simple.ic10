@@ -42,13 +42,12 @@ s db Setting IngotHash
 
 l r0 OverrideLever Setting
 bnez r0 start
-
 l r0 EngageLever Setting
 beqz r0 DisabledMode
 
 sb FURNACE On 1
 sb FURNACE SettingOutput 0
-sb FURNACE SettingInput 50
+sb FURNACE SettingInput 100
 s ColdPump On 1
 s HotPump On 1
 s ExhaustPump On 1
@@ -66,7 +65,6 @@ sb FURNACE Open r0
 breqz r0 2
 yield
 
-# Check pressure and temp
 bgt CurPress MaxPress DecreasePress
 blt CurPress MinPress IncreasePress
 bgt CurTemp MaxTemp DecreaseTemp
@@ -97,17 +95,29 @@ bgt CurPress SAFEPRESS SafetyFirst
 j start
 
 DecreasePress:
-sb FURNACE SettingOutput 50
+sub r0 CurPress MaxPress
+div r0 r0 CurPress
+mul r0 r0 100
+sb FURNACE SettingOutput r0
 j start
 
 DecreaseTemp:
-s ColdPump Setting 5
+sub r0 CurTemp MaxTemp
+div r0 r0 CurTemp
+mul r0 r0 100
+s ColdPump Setting r0
 j start
 
 IncreaseTemp:
-s HotPump Setting 5
+sub r0 MinTemp CurTemp
+div r0 r0 CurTemp
+mul r0 r0 100
+s HotPump Setting r0
 j start
 
 IncreasePress:
-s ExhaustPump Setting 10
+sub MinPress CurPress
+div r0 r0 CurPress
+mul r0 r0 100
+s ExhaustPump Setting r0
 j start
