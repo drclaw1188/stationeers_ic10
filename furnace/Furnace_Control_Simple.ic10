@@ -46,8 +46,8 @@ l r0 EngageLever Setting
 beqz r0 DisabledMode
 
 sb FURNACE On 1
-sb FURNACE SettingOutput 0
 sb FURNACE SettingInput 100
+sb FURNACE SettingOutput 0
 s ColdPump On 1
 s HotPump On 1
 s ExhaustPump On 1
@@ -75,11 +75,7 @@ DisabledMode:
 s ColdPump On 0
 s HotPump On 0
 s ExhaustPump On 0
-l r0 ExhaustPump Pressure
-slt r0 r0 MAXTANKPRESS
-mul r0 r0 100
-sb FURNACE SettingOutput r0
-lb CurPress FURNACE Pressure Maximum
+sb FURNACE SettingOutput 100
 sgt r0 CurPress EMPTYPRESS
 sb FURNACE On r0
 j start
