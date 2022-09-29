@@ -14,13 +14,13 @@ define STACKSIZE 85
 define MININGOTSTACK 50
 define MAXTANKPRESS 20000
 
-alias CurTemp r6
-alias CurPress r7
-alias IngotHash r8
-alias MinTemp r9
-alias MaxTemp r10
-alias MinPress r11
-alias MaxPress r12
+alias CurTemp r8
+alias CurPress r9
+alias IngotHash r10
+alias MinTemp r11
+alias MaxTemp r12
+alias MinPress r13
+alias MaxPress r14
 
 start:
 yield
@@ -116,4 +116,10 @@ sub r0 MinPress CurPress
 div r0 r0 CurPress
 mul r0 r0 100
 s ExhaustPump Setting r0
+sgt r1 CurTemp MaxTemp
+mul r1 r1 r0
+s ColdPump Setting r1
+slt r1 CurTemp MinTemp
+mul r1 r1 r0
+s HotPump Setting r1
 j start
