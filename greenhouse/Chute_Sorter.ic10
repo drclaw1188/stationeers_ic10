@@ -1,0 +1,25 @@
+alias Chute d0
+
+define IRON -1301215609
+define SILICON -290196476
+
+s db Setting 0
+
+start:
+yield
+
+s Chute On 0
+# s Chute SettingOutput 0
+
+ls r0 Chute 0 OccupantHash
+beqz r0 start
+
+# s Chute Setting 1
+# s Chute SettingOutput 1
+s Chute On 1
+
+s db Setting r0
+seq r0 r0 SILICON
+s Chute Mode r0
+
+j start
