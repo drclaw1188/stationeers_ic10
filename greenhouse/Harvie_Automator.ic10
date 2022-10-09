@@ -1,0 +1,56 @@
+# Harvie controller  Cows Are Evil
+# Do you want Harvie to harvest seeds?
+define HARVESTSEEDS 5  # Number to harvest
+#----------------------------------------
+
+define PLANTSLOT 0
+define INPUTSLOT 0
+
+s db Setting 1
+move r10 HARVESTSEEDS
+move r11 HARVESTSEEDS
+move r12 HARVESTSEEDS
+
+start:
+alias hydroponics d0
+alias harvie d3
+alias seeds r10
+jal checkHydroponics
+alias hydroponics d1
+alias harvie d4
+alias seeds r11
+jal checkHydroponics
+alias hydroponics d2
+alias harvie d5
+alias seeds r12
+jal checkHydroponics
+sleep 8
+j start
+
+checkHydroponics:
+bdns hydroponics ra
+bdns harvie ra
+ls r0 hydroponics PLANTSLOT Seeding
+bgtz r0 getSeeds
+ls r0 hydroponics PLANTSLOT Mature
+beq r0 -1 plant
+beqz r0 ra
+s harvie Harvest 1
+j ra
+
+plant:
+ls r0 harvie INPUTSLOT Quantity
+beqz r0 ra
+l r0 hydroponics TotalMoles
+beqz r0 ra
+l r0 db Setting
+beqz r0 ra
+s harvie Plant 1
+move seeds HARVESTSEEDS
+j ra
+
+getSeeds:
+beqz seeds ra
+s harvie Harvest 1
+sub seeds seeds 1
+j ra
