@@ -1,0 +1,21 @@
+# Some code borrowed from Cows Are Evil ... thanks.
+
+alias Hydroponics d0
+
+define HARVIE 958056199
+define TOMATOSEEDS -1922066841
+
+start:
+yield
+
+ls r0 Hydroponics 0 Seeding
+ls r1 Hydroponics 0 Mature
+add r0 r0 r1
+breqz r0 2
+sb HARVIE Harvest 1
+
+ls r0 Hydroponics 0 Occupied
+breqz r0 2
+sb HARVIE Plant 1
+
+j start
