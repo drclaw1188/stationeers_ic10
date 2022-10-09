@@ -3,13 +3,14 @@ alias Hydroponics d0
 define HARVIE 958056199
 define TOMATOSEEDS -1922066841
 
+alias ChuteHash
+
 start:
 yield
 
 ls r0 Hydroponics 0 Seeding
 sgtz r0 r0
 ls r1 Hydroponics 0 Mature
-s db Setting r1
 or r0 r0 r1
 breqz r0 2
 sb HARVIE Harvest 1
@@ -18,4 +19,21 @@ ls r0 Hydroponics 0 Occupied
 brnez r0 2
 sb HARVIE Plant 1
 
+move r9 1
+
+CheckChutes:
+yield
+s dr9 On 0
+ls ChuteHash dr9 0 OccupantHash
+bnezal ChuteHash SetChute
+add r9 r9 1
+blt r9 5 CheckChutes
+
 j start
+
+SetChute:
+s db Setting ChuteHash
+seq r0 ChuteHash TOMATOSEEDS
+s Chute Mode r0
+s Chute On 1
+j ra
