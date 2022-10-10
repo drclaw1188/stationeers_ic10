@@ -1,16 +1,27 @@
 alias Hydroponics d0
+alias Chute d1
 
 define HARVIE 958056199
+define CORN 258339687
 define CORNSEEDS -1290755415
+define FERN 892110467
 define FERNSEEDS -1990600883
+define POTATO 1929046963
 define POTATOSEEDS 1005571172
+define PUMPKIN 1277828144
 define PUMPKINSEEDS 1423199840
+define RICE 658916791
 define RICESEEEDS -1691151239
+define SOYBEAN 1924673028
 define SOYBEANSEEDS 1783004244
+define TOMATO -998592080
 define TOMATOSEEDS -1922066841
+defien WHEAT -1057658015
 define WHEATSEEDS -654756733
 
-alias ChuteHash
+alias ChuteHash r15
+
+s db Setting 0
 
 start:
 yield
@@ -26,21 +37,18 @@ ls r0 Hydroponics 0 Occupied
 brnez r0 2
 sb HARVIE Plant 1
 
-move r9 1
-
-CheckChutes:
-yield
-s dr9 On 0
-ls ChuteHash dr9 0 OccupantHash
+s Chute On 0
+s Chute Setting 0
+s Chute SettingOutput 0
+ls ChuteHash Chute 0 OccupantHash
 bnezal ChuteHash SetChute
-add r9 r9 1
-blt r9 5 CheckChutes
 
 j start
 
 SetChute:
 s db Setting ChuteHash
-seq r0 ChuteHash TOMATOSEEDS
+seq r0 ChuteHash TOMATO
 s Chute Mode r0
+yield
 s Chute On 1
 j ra
