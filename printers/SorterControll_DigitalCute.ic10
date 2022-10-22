@@ -4,17 +4,10 @@ alias ElectronicsSorter d2
 alias ToolsSorter d3
 alias OutputSorter d4
 
-# s AutolatheSorter Mode 2
-# s PipeBenderSorter Mode 2
-# s ElectronicsSorter Mode 2
-# s ToolsSorter Mode 2
-# s OutputSorter Mode 2
-
 start:
 yield
 
 l r0 db Setting
-# beqz r0 start
 
 seq r1 r0 1
 s AutolatheSorter Mode r1
