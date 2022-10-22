@@ -1,0 +1,57 @@
+define COPPERINGOT -404336834
+define COPPERORE -707307845
+define GOLDINGOT 226410516
+define GOLDORE -1348105509
+define IRONINGOT -1301215609
+define IRONORE 1758427767
+define LEADINGOT 2134647745
+define LEADORE -190236170
+define NICKELINGOT -1406385572
+define NICKELORE 1830218956
+define SILICONINGOT -290196476
+define SILICONORE 1103972403
+define SILVERINGOT -929742000
+define SILVERORE -916518678
+
+alias ChuteHash r15
+alias SelectedHash r14
+
+start:
+move r9 -1
+
+CheckCutes:
+yield
+add r9 r9 1
+bgt r9 5 start
+bdns dr9 CheckCutes
+
+seq r0 r9 0
+select SelectedHash r0 COPPERORE SelectedHash
+seq r0 r9 1
+select SelectedHash r0 GOLDORE SelectedHash
+seq r0 r9 2
+select SelectedHash r0 IRONORE SelectedHash
+seq r0 r9 3
+select SelectedHash r0 NICKELORE SelectedHash
+seq r0 r9 4
+select SelectedHash r0 SILICONORE SelectedHash
+seq r0 r9 5
+select SelectedHash r0 SILVERORE SelectedHash
+
+s dr9 On 0
+s dr9 Setting 0
+s dr9 SettingOutput 0
+ls ChuteHash dr9 0 OccupantHash
+bnezal ChuteHash SetChute
+
+j CheckCutes
+
+SetChute:
+s db Setting ChuteHash
+seq r0 ChuteHash SelectedHash
+s dr9 Mode r0
+yield
+s dr9 On 1
+yield
+s dr9 On 0
+j ra
