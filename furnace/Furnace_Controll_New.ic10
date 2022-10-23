@@ -29,10 +29,6 @@ l r0 OverrideLever Setting
 bnez r0 start
 
 sb FURNACE SettingInput 100
-s ColdPump Setting 0
-s HotPump Setting 0
-s ExhaustPump Setting 0
-
 l IngotHash db Setting
 snez r0 IngotHash
 s ColdPump On r0
@@ -70,9 +66,15 @@ move TargetPress 0
 bgt CurTemp MaxTemp DecreaseTemp
 blt CurTemp MinTemp IncreaseTemp
 blt CurPress MinPress IncreasePress
+s ColdPump Setting 0
+s HotPump Setting 0
+s ExhaustPump Setting 0
 j start
 
 DisabledMode:
+s ColdPump Setting 0
+s HotPump Setting 0
+s ExhaustPump Setting 0
 sb FURNACE SettingOutput 100
 sgt r0 CurPress EMPTYPRESS
 sb FURNACE On r0
