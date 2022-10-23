@@ -20,12 +20,13 @@ alias MinPress r13
 alias MaxPress r14
 alias TargetPress r15
 
+s db Setting 0
+
 start:
 yield
 lb CurPress FURNACE Pressure Maximum
 lb CurTemp FURNACE Temperature Maximum
 bgt CurPress UNSAFEPRESS SafetyFirst
-
 l r0 OverrideLever Setting
 bnez r0 start
 
