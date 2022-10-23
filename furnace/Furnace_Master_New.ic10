@@ -1,0 +1,127 @@
+alias VendingMachine d0
+alias FurnaceIC d1
+alias Dial d2
+alias SteelMem d3
+alias RequestMem d4
+alias DisplayMem d5
+
+define STACKSIZE 119
+define FIRSTSLOT 2
+define LASTSLOT 101
+define FURNACE 545937711
+define BUTTON 491845673
+define LED 1944485013
+
+alias SlotToCheck r5
+alias IngotRequested r6
+alias OreRequested r7
+alias OreQuantity r8
+alias Ore1 r9
+alias Ore1Q r10
+alias Ore2 r11
+alias Ore2Q r12
+alias Ore3 r13
+alias Ore3Q r14
+alias ItemCount r15
+move IngotRequested 0
+
+main:
+s db Setting 0
+yield
+sb LED Color 2
+l IngotRequested RequestMem Setting
+bnez IngotRequested DispenseOre
+
+l sp Dial Setting
+mul sp sp 7
+add sp sp 1
+peek IngotRequested
+s DisplayMem Setting IngotRequested
+lb r0 BUTTON Setting Average
+beqz r0 main
+
+DispenseOre:
+s DisplayMem Setting IngotRequested
+move sp STACKSIZE
+findIngot:
+pop Ore3Q
+pop Ore3
+pop Ore2Q
+pop Ore2
+pop Ore1Q
+pop Ore1
+pop r0
+bne r0 IngotRequested findIngot
+
+sb LED Color 5
+move OreRequested Ore1
+move OreQuantity Ore1Q
+jal CountObject
+move OreRequested Ore2
+move OreQuantity Ore2Q
+jal CountObject
+move OreRequested Ore3
+move OreQuantity Ore3Q
+jal CountObject
+sb LED Color 3
+move OreRequested Ore1
+move OreQuantity Ore1Q
+jal VendObject
+move OreRequested Ore2
+move OreQuantity Ore2Q
+jal VendObject
+move OreRequested Ore3
+move OreQuantity Ore3Q
+jal VendObject
+
+s FurnaceIC Setting IngotRequested
+lb r0 FURNACE ExportCount Maximum
+WaitForExport:
+yield
+lb r1 FURNACE ExportCount Maximum
+beq r0 r1 WaitForExport
+s FurnaceIC Setting 0
+
+WaitForMem:
+yield
+l r0 RequestMem Setting
+bnez r0 WaitForMem
+j main
+
+VendObject:
+beqz OreRequested ra
+s db Setting OreRequested
+lb r1 FURNACE ImportCount Maximum
+s SteelMem Setting OreRequested
+s VendingMachine RequestHash 0
+yield # Above line is workaround for game bug
+s VendingMachine RequestHash OreRequested
+WaitForImport:
+yield
+lb r0 FURNACE ImportCount Maximum
+beq r0 r1 WaitForImport
+s SteelMem Setting 0
+sub OreQuantity OreQuantity 1
+bnez OreQuantity VendObject
+j ra
+
+CountObject:
+move ItemCount 0
+beqz OreRequested ra
+s db Setting OreRequested
+move SlotToCheck FIRSTSLOT
+ContinueChecking:
+ls r1 VendingMachine SlotToCheck OccupantHash
+brne r1 OreRequested 2
+add ItemCount ItemCount 1
+add SlotToCheck SlotToCheck 1
+ble SlotToCheck LASTSLOT ContinueChecking
+DoneChecking:
+bge ItemCount OreQuantity ra
+sb LED Color 4
+l r0 VendingMachine ImportCount
+WaitForImport:
+yield
+l r1 VendingMachine ImportCount
+beq r0 r1 WaitForImport
+j CountObject
