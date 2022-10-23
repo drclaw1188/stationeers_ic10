@@ -96,10 +96,10 @@ s SteelMem Setting OreRequested
 s VendingMachine RequestHash 0
 yield # Above line is workaround for game bug
 s VendingMachine RequestHash OreRequested
-WaitForImport:
+WaitForFurnImport:
 yield
 lb r0 FURNACE ImportCount Maximum
-beq r0 r1 WaitForImport
+beq r0 r1 WaitForFurnImport
 s SteelMem Setting 0
 sub OreQuantity OreQuantity 1
 bnez OreQuantity VendObject
@@ -120,8 +120,8 @@ DoneChecking:
 bge ItemCount OreQuantity ra
 sb LED Color 4
 l r0 VendingMachine ImportCount
-WaitForImport:
+WaitForVendImport:
 yield
 l r1 VendingMachine ImportCount
-beq r0 r1 WaitForImport
+beq r0 r1 WaitForVendImport
 j CountObject
