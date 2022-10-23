@@ -116,7 +116,6 @@ brne r1 OreRequested 2
 add ItemCount ItemCount 1
 add SlotToCheck SlotToCheck 1
 ble SlotToCheck LASTSLOT ContinueChecking
-DoneChecking:
 bge ItemCount OreQuantity ra
 sb LED Color 4
 l r0 VendingMachine ImportCount
