@@ -9,12 +9,7 @@ move sp 0
 push 0
 push 0
 push 9999
-push CANNEDRICE
-
-push 0
-push 0
-push 9999
-push CANNEDSOY
+push CANNEDCORN
 
 push 0
 push 0
@@ -25,6 +20,11 @@ push 0
 push 0
 push 9999
 push CANNEDRICE
+
+push 0
+push 0
+push 9999
+push CANNEDSOY
 
 push 0
 push 0
