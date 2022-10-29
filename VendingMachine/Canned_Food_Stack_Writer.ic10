@@ -1,0 +1,32 @@
+define CANNEDRICE -1185552595
+define CANNEDSOY -999714082
+define CANNEDCORN 545034114
+define CANNEDPUMPKIN 1277979876
+define CANNEDTOMATO 688734890
+
+move sp 0
+
+push 0
+push 0
+push 9999
+push CANNEDRICE
+
+push 0
+push 0
+push 9999
+push CANNEDSOY
+
+push 0
+push 0
+push 9999
+push CANNEDPUMPKIN
+
+push 0
+push 0
+push 9999
+push CANNEDRICE
+
+push 0
+push 0
+push 9999
+push CANNEDTOMATO
