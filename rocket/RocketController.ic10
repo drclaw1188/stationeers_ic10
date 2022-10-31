@@ -31,9 +31,9 @@ start:
 s db Setting 50
 sb LED Color 2
 yield
-sb SORTER On 1
-sb STACKER On 1
-sb STACKER2 On 1
+sb SORTER On 0
+sb STACKER On 0
+sb STACKER2 On 0
 sb SBD Open 0
 jal UpdateInfo
 # Return if rocket is already launched
