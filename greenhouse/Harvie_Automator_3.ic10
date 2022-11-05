@@ -1,0 +1,76 @@
+alias Chute d2
+
+define HARVIE 958056199
+define CORN 258339687
+define CORNSEEDS -1290755415
+define FERN 892110467
+define FERNSEEDS -1990600883
+define POTATO 1929046963
+define POTATOSEEDS 1005571172
+define PUMPKIN 1277828144
+define PUMPKINSEEDS 1423199840
+define RICE 658916791
+define RICESEEEDS -1691151239
+define SOYBEAN 1924673028
+define SOYBEANSEEDS 1783004244
+define TOMATO -998592080
+define TOMATOSEEDS -1922066841
+define WHEAT -1057658015
+define WHEATSEEDS -654756733
+
+alias ChuteHash r15
+
+reset:
+move r8 -1
+
+s Chute On 0
+s Chute Setting 0
+s Chute SettingOutput 0
+ls ChuteHash Chute 0 OccupantHash
+bnezal ChuteHash SetChute
+
+start:
+yield
+
+add r8 r8 1
+add r9 r8 3
+bgt r8 1 reset
+
+ls r0 dr8 0 Seeding
+sgtz r0 r0
+ls r1 dr8 0 Mature
+sgtz r1 r1
+or r0 r0 r1
+breqz r0 2
+s dr9 Harvest 1
+
+ls r0 dr8 0 Occupied
+seqz r0 r0
+ls r1 dr9 0 Quantity
+and r0 r0 r1
+breqz r0 2
+s dr9 Plant 1
+
+j start
+
+SetChute:
+s db Setting ChuteHash
+seq r0 ChuteHash CORN
+seq r1 ChuteHash FERN
+or r0 r0 r1
+seq r1 ChuteHash POTATO
+or r0 r0 r1
+seq r1 ChuteHash PUMPKIN
+or r0 r0 r1
+seq r1 ChuteHash RICE
+or r0 r0 r1
+seq r1 ChuteHash SOYBEAN
+or r0 r0 r1
+seq r1 ChuteHash TOMATO
+or r0 r0 r1
+seq r1 ChuteHash WHEAT
+or r0 r0 r1
+s Chute Mode r0
+yield
+s Chute On 1
+j ra
