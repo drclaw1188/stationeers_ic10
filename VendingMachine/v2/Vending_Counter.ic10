@@ -1,0 +1,86 @@
+alias VendingMachine d0
+alias UsedSlotsDisplay d1
+alias QueryMemory1 d2
+alias ResponseMemory1 d3
+alias QueryMemory2 d4
+alias ResponseMemory2 d5
+
+define LASTSLOT 101
+
+alias QuantityToAdd r15
+alias QuantityToSubtract r14
+alias ItemHash r13
+alias ItemCount r12
+alias UsedSlots r11
+
+Setup:
+move r0 1
+move QuantityToSubtract 0
+ContinueCounting:
+add r0 r0 1
+bgt r0 LASTSLOT Main
+ls ItemHash VendingMachine r0 OccupantHash
+beqz ItemHash ContinueCounting
+add UsedSlots UsedSlots 1
+ls QuantityToAdd VendingMachine r0 Quantity
+jal UpdateStack
+j ContinueCounting
+
+Main:
+yield
+ls ItemHash VendingMachine 0 OccupantHash
+breqz ItemHash 5
+add UsedSlots UsedSlots 1
+move QuantityToSubtract 0
+ls QuantityToAdd VendingMachine 0 Quantity
+jal UpdateStack
+ls ItemHash VendingMachine 1 OccupantHash
+breqz ItemHash 5
+sub UsedSlots UsedSlots 1
+move QuantityToAdd 0
+ls QuantityToSubtract VendingMachine 1 Quantity
+jal UpdateStack
+s UsedSlotsDisplay Setting UsedSlots 
+
+l ItemHash QueryMemory1 Setting
+breqz ItemHash 3
+move r9 3
+jal GetItemCount
+l ItemHash QueryMemory2 Setting
+breqz ItemHash 3
+move r9 5
+jal GetItemCount
+
+j Main
+
+GetItemCount:
+mul sp ItemCount 2
+FindItem1:
+pop r0
+pop r1
+beq ItemHash r0 FoundItem
+bgtz sp FindItem1
+move r1 0
+FoundItem:
+s dr9 r1
+j ra
+
+UpdateStack:
+mul sp ItemCount 2
+FindItem2:
+pop r0
+pop r1
+beq ItemHash r0 UpdateItem
+bgtz sp FindItem2
+mul sp ItemCount 2
+sub r0 QuantityToAdd QuantityToSubtract
+push r0
+push ItemHash
+add ItemCount
+j ra
+UpdateItem:
+add r1 r1 QuantityToAdd
+sub r1 r1 QuantityToSubtract
+sub sp sp 2
+push r1
+j ra
