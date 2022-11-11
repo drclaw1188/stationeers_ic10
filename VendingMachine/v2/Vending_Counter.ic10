@@ -16,6 +16,7 @@ alias CurSlot r10
 
 Setup:
 s db Setting 100
+move UsedSlots 0
 move CurSlot 1
 move QuantityToSubtract 0
 ContinueCounting:
