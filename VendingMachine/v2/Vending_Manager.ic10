@@ -42,6 +42,7 @@ s QuantityDisplay Setting curCount
 s db Setting curItem
 brdns ItemRequest 2
 blt curCount curMin RequestMore
+brdns OutputSorter 2
 bgt curCount curMax RemoveOne
 j CheckInventory
 
