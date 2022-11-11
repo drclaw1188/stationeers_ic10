@@ -1,0 +1,98 @@
+# This script displays how much of each thing listed
+# is inside a vending machine, and maintains quantities
+# Requires stack pre-programing
+# See https://github.com/drclaw1188/stationeers_ic10/tree/main/VendingMachine for more information
+# Contact me on Discord: notinservice
+
+alias RequestMemory d0
+alias ResponseMemory d1
+alias QuantityDisplay d2
+alias Dial d3
+alias ItemRequest d4 # Optional
+alias OutputSorter d5 # Optional
+
+define STACKSIZE 48 # Change to size of stack
+define VENDINGMACHINE 
+
+alias curItem r8
+alias curCount r9
+alias curMin r10
+alias curMax r11
+alias LastImportCount r12
+alias LastExportCount r13
+
+brdns OutputSorter 2
+s OutputSorter Mode 2
+
+CountObjects:
+yield
+
+move sp STACKSIZE
+CheckInventory:
+beqz sp Main
+pop curItem
+pop curMax
+pop curMin
+s RequestMemory Setting curItem
+yield
+l curCount ResponseMemory Setting
+s QuantityDisplay Color 5 # Yellow
+s QuantityDisplay Setting curCount
+s db Setting curItem
+brdns ItemRequest 2
+blt curCount curMin RequestMore
+bgt curCount curMax RemoveOne
+j CheckInventory
+
+RequestMore:
+s QuantityDisplay Color 4 # Red
+lb LastImportCount VENDINGMACHINE ImportCount Sum
+s ItemRequest Setting curItem
+WaitForImport:
+yield
+lb r0 VENDINGMACHINE ImportCount Sum
+beq r0 LastImportCount WaitForImport
+move LastImportCount r0
+s ItemRequest Setting 0
+j CountObjects
+
+RemoveOne:
+s QuantityDisplay Color 3 # Orange
+lb LastExportCount VENDINGMACHINE ExportCount Sum
+brdns OutputSorter 2
+s OutputSorter Output 1
+s VendingMachine RequestHash 0
+yield
+s VendingMachine RequestHash curItem
+WaitForExport:
+yield
+lb r0 VENDINGMACHINE ExportCount Sum
+beq r0 LastExportCount WaitForExport
+move LastExportCount r0
+j CountObjects
+
+Main:
+yield
+
+lb r0 VENDINGMACHINE ImportCount Sum
+sne r1 r0 LastImportCount
+move LastImportCount r0
+lb r0 VENDINGMACHINE ExportCount Sum
+sne r2 r0 LastExportCount
+move LastExportCount r0
+or r1 r1 r2
+bnez r1 CountObjects
+
+brdns OutputSorter 2
+s OutputSorter Output 0
+s QuantityDisplay Color 2 # Green
+l sp Dial Setting
+add sp sp 1
+mul sp sp 3
+pop curItem
+s RequestMemory Setting curItem
+yield
+l curCount ResponseMemory Setting
+s db Setting curItem
+s QuantityDisplay Setting curCount
+j main
