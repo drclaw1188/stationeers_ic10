@@ -11,7 +11,7 @@ alias Dial d3
 alias ItemRequest d4 # Optional
 alias OutputSorter d5 # Optional
 
-define STACKSIZE 48 # Change to size of stack
+define STACKSIZE 72 # Change to size of stack
 define VENDINGMACHINE -443130773
 
 alias curItem r8
@@ -33,11 +33,19 @@ beqz sp Main
 pop curItem
 pop curMax
 pop curMin
+WaitForMinusOne:
+s QueryMemory Setting 0
+yield
+l curCount ResponseMemory Setting
+bne curCount -1 WaitForMinusOne
+WaitForValue:
 s QueryMemory Setting curItem
 yield
 l curCount ResponseMemory Setting
+beq curCount -1 WaitForValue
+sub sp sp 1
 push curCount
-sub sp sp 2
+sub sp sp 1
 s QuantityDisplay Color 5 # Yellow
 s QuantityDisplay Setting curCount
 s db Setting curItem
@@ -76,6 +84,7 @@ j CountObjects
 
 Main:
 yield
+s QueryMemory Setting 0
 
 lb r0 VENDINGMACHINE ImportCount Sum
 sne r1 r0 LastImportCount
