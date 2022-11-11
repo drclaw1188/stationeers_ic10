@@ -83,6 +83,7 @@ select IngotNeeded r0 156348098 IngotNeeded
 s db Setting IngotNeeded
 beqz IngotNeeded ra
 
+sb LED Color 5
 s SorterChip Setting r9
 l LastImportCount dr9 ImportCount
 sb VENDINGMACHINE RequestHash 0
@@ -93,7 +94,6 @@ lb r0 VENDINGMACHINE RequestHash Average
 breq r0 IngotNeeded 3
 sb LED Color 4
 j ra
-sb LED Color 5
 WaitForDelivery:
 yield
 l r0 dr9 ImportCount
