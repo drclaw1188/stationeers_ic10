@@ -8,6 +8,7 @@ alias SorterChip d5
 define MINIMUMINGOT 50
 define VENDINGMACHINE -443130773
 define INGOTSTEEL -654790771
+define LED 1944485013
 
 alias IngotNeeded r11
 alias LastImportCount r12
@@ -80,35 +81,37 @@ select IngotNeeded r0 -1897868623 IngotNeeded
 lr r0 dr9 Required Waspaloy
 select IngotNeeded r0 156348098 IngotNeeded
 s db Setting IngotNeeded
-
 beqz IngotNeeded ra
 
-sb VENDINGMACHINE RequestHash 0
 s SorterChip Setting r9
 l LastImportCount dr9 ImportCount
+sb VENDINGMACHINE RequestHash 0
 yield
 sb VENDINGMACHINE RequestHash IngotNeeded
-
+yield
+lb r0 VENDINGMACHINE RequestHash Average
+breq r0 IngotNeeded 3
+sb LED Color 4
+j ra
+sb LED Color 5
 WaitForDelivery:
 yield
 l r0 dr9 ImportCount
 beq r0 LastImportCount WaitForDelivery
-
 s SorterChip Setting 0
+sb LED Color 2
 yield
 j ra
 
 ManageRequest:
-sb VENDINGMACHINE RequestHash 0
 s SorterChip Setting 5
+sb VENDINGMACHINE RequestHash 0
 yield
 sb VENDINGMACHINE RequestHash IngotNeeded
-
 WaitForMemory:
 yield
 l r0 RequestMem Setting
 bnez r0 WaitForMemory
-
 s SorterChip Setting 0
 yield
 j ra
