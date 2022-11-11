@@ -12,7 +12,7 @@ alias ItemRequest d4 # Optional
 alias OutputSorter d5 # Optional
 
 define STACKSIZE 48 # Change to size of stack
-define VENDINGMACHINE 
+define VENDINGMACHINE -443130773
 
 alias curItem r8
 alias curCount r9
@@ -36,6 +36,7 @@ pop curMin
 s RequestMemory Setting curItem
 yield
 l curCount ResponseMemory Setting
+push curCount
 s QuantityDisplay Color 5 # Yellow
 s QuantityDisplay Setting curCount
 s db Setting curItem
@@ -61,9 +62,9 @@ s QuantityDisplay Color 3 # Orange
 lb LastExportCount VENDINGMACHINE ExportCount Sum
 brdns OutputSorter 2
 s OutputSorter Output 1
-s VendingMachine RequestHash 0
+sb VENDINGMACHINE RequestHash 0
 yield
-s VendingMachine RequestHash curItem
+sb VENDINGMACHINE RequestHash curItem
 WaitForExport:
 yield
 lb r0 VENDINGMACHINE ExportCount Sum
@@ -88,11 +89,10 @@ s OutputSorter Output 0
 s QuantityDisplay Color 2 # Green
 l sp Dial Setting
 add sp sp 1
-mul sp sp 3
+mul sp sp 4
 pop curItem
-s RequestMemory Setting curItem
-yield
-l curCount ResponseMemory Setting
+sub sp sp 2
+pop curCount
 s db Setting curItem
 s QuantityDisplay Setting curCount
-j main
+j Main
