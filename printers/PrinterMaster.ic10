@@ -80,8 +80,8 @@ lr r0 dr9 Required Stellite
 select IngotNeeded r0 -1897868623 IngotNeeded
 lr r0 dr9 Required Waspaloy
 select IngotNeeded r0 156348098 IngotNeeded
-s db Setting IngotNeeded
 beqz IngotNeeded ra
+s db Setting IngotNeeded
 
 sb LED Color 5
 s SorterChip Setting r9
@@ -101,6 +101,7 @@ beq r0 LastImportCount WaitForDelivery
 s SorterChip Setting 0
 sb LED Color 2
 yield
+s db Setting 0
 j ra
 
 ManageRequest:
