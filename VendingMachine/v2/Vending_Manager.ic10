@@ -4,7 +4,7 @@
 # See https://github.com/drclaw1188/stationeers_ic10/tree/main/VendingMachine for more information
 # Contact me on Discord: notinservice
 
-alias RequestMemory d0
+alias QueryMemory d0
 alias ResponseMemory d1
 alias QuantityDisplay d2
 alias Dial d3
@@ -33,7 +33,7 @@ beqz sp Main
 pop curItem
 pop curMax
 pop curMin
-s RequestMemory Setting curItem
+s QueryMemory Setting curItem
 yield
 l curCount ResponseMemory Setting
 push curCount
