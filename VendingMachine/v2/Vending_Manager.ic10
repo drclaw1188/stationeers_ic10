@@ -36,6 +36,7 @@ pop curMin
 s QueryMemory Setting curItem
 yield
 l curCount ResponseMemory Setting
+sub sp sp 1
 push curCount
 s QuantityDisplay Color 5 # Yellow
 s QuantityDisplay Setting curCount
