@@ -15,11 +15,11 @@ alias UsedSlots r11
 alias CurSlot r10
 
 Setup:
-s db Setting 100
-move UsedSlots 0
 move ItemCount 0
+move UsedSlots 0
 move CurSlot 1
 move QuantityToSubtract 0
+s db Setting 50
 ContinueCounting:
 add CurSlot CurSlot 1
 bgt CurSlot LASTSLOT Main
@@ -32,7 +32,9 @@ j ContinueCounting
 
 Main:
 yield
-s db Setting 200
+s db Setting 100
+s UsedSlotsDisplay Setting UsedSlots
+
 ls ItemHash VendingMachine 0 OccupantHash
 breqz ItemHash 5
 add UsedSlots UsedSlots 1
@@ -45,20 +47,29 @@ sub UsedSlots UsedSlots 1
 move QuantityToAdd 0
 ls QuantityToSubtract VendingMachine 1 Quantity
 jal UpdateStack
-s UsedSlotsDisplay Setting UsedSlots
+
+WaitForImportExport:
+yield
+ls r0 VendingMachine 0 OccupantHash
+ls r1 VendingMachine 1 OccupantHash
+or r0 r0 r1
+bnez r0 WaitForImportExport
 
 l ItemHash QueryMemory1 Setting
-breqz ItemHash 3
+# breqz ItemHash 3
 move r9 3
 jal GetItemCount
 l ItemHash QueryMemory2 Setting
-breqz ItemHash 3
+# breqz ItemHash 3
 move r9 5
 jal GetItemCount
 
 j Main
 
 GetItemCount:
+brnez ItemHash 3
+s dr9 Setting -1
+j ra
 mul sp ItemCount 2
 FindItem1:
 pop r0
