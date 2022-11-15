@@ -67,9 +67,9 @@ yield
 select r0 TargetPress TargetPress MaxPress
 bgt CurPress r0 DecreasePress
 move TargetPress 0
+blt CurPress MinPress IncreasePress
 bgt CurTemp MaxTemp DecreaseTemp
 blt CurTemp MinTemp IncreaseTemp
-blt CurPress MinPress IncreasePress
 j start
 
 DisabledMode:
