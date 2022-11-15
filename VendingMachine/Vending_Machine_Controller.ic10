@@ -42,9 +42,6 @@ bgez sp ZeroCount
 ContinueCounting:
 add SlotToCheck SlotToCheck 1
 bgt SlotToCheck LASTSLOT DoneCounting
-# ls r1 VendingMachine SlotToCheck Occupied
-# beqz r1 ContinueCounting
-# add UsedSlots UsedSlots 1
 ls r1 VendingMachine SlotToCheck OccupantHash
 beqz r1 ContinueCounting
 add UsedSlots UsedSlots 1
@@ -72,6 +69,7 @@ s QuantityDisplay Setting curCount
 s db Setting curItem
 brdns ItemRequest 2
 blt curCount curMin RequestMore
+brdns OutputSorter 2
 bgt curCount curMax RemoveOne
 j CheckInventory
 RequestMore:
