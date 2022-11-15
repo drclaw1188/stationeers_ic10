@@ -113,6 +113,7 @@ div r0 r0 CurTemp
 mul r0 r0 100
 max r0 r0 5
 s HotPump Setting r0
+sb FURNACE Activate 1
 j start
 
 IncreasePress:
