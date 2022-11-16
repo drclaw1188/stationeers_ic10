@@ -12,9 +12,15 @@ define BUTTON 491845673
 
 alias IngotNeeded r11
 alias LastImportCount r12
+alias MissingIngot r13
 
 start:
 yield
+s db Setting MissingIngot
+select r0 MissingIngot 4 2
+sb LED Color r0
+move MissingIngot 0
+
 move r9 1
 jal CheckPrinter
 move r9 2
@@ -85,6 +91,7 @@ ls r0 VendingMachine r5 OccupantHash
 beq r0 IngotNeeded DeliverIngot
 add r5 r5 1
 blt r5 102 FindIngot
+move MissingIngot IngotNeeded
 sb LED Color 4
 yield
 j ra
