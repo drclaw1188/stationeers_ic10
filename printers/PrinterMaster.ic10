@@ -89,11 +89,6 @@ l LastImportCount dr9 ImportCount
 sb VENDINGMACHINE RequestHash 0
 yield
 sb VENDINGMACHINE RequestHash IngotNeeded
-yield
-lb r0 VENDINGMACHINE RequestHash Average
-breq r0 IngotNeeded 3
-sb LED Color 4
-j ra
 WaitForDelivery:
 yield
 l r0 dr9 ImportCount
