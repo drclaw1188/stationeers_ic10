@@ -95,7 +95,7 @@ s DispenserMem Setting r0
 
 WaitSiloLoop:
 yield
-l r1 RequestMemory Setting
+l r1 DispenserMem Setting
 beq r1 r0 WaitSiloLoop
 
 bnez r1 MissingIngot
