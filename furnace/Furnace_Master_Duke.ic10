@@ -61,15 +61,13 @@ beqz dispenserValues Main
 s db Setting IngotRequested
 s StatusLED Color 5 # Yellow
 
+sgt FurnaceNeeded dispenserValues 1000
+l LastImportCount VendingMachine Setting
+
 move dispenserData dispenserValues
 move Instruction 10000
 jal DispenseLoop
 
-sgt FurnaceNeeded dispenserValues 1000
-s FurnaceChute Mode FurnaceNeeded
-yield
-
-l LastImportCount VendingMachine ImportCount
 breqz FurnaceNeeded 2
 s FurnaceIC Setting IngotRequested
 
@@ -79,8 +77,8 @@ jal DispenseLoop
 
 WaitForImport:
 yield
-l r1 VendingMachine ImportCount
-beq r0 r1 WaitForImport
+l r1 VendingMachine Setting
+beq LastImportCount r1 WaitForImport
 
 s StatusLED Color 2 # Green
 s db Setting 0
@@ -91,6 +89,10 @@ s DispenserMem Setting 0
 j Main
 
 DispenseLoop:
+seqz r0 FurnaceNeeded
+s FurnaceChute Mode r0
+yield
+
 mod r0 dispenserData 1000
 add r0 r0 Instruction
 s DispenserMem Setting r0
