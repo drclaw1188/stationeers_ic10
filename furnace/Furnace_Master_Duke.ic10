@@ -57,7 +57,9 @@ select dispenserValues r0 103210202 dispenserValues
 seq r0 IngotRequested 156348098 # Waspaloy 16
 select dispenserValues r0 206109107 dispenserValues
 beqz dispenserValues Main
+
 s db Setting IngotRequested
+s StatusLED Color 5 # Yellow
 
 move dispenserData dispenserValues
 move Instruction 10000
@@ -67,7 +69,6 @@ sgt FurnaceNeeded dispenserValues 1000
 s FurnaceChute Mode FurnaceNeeded
 yield
 
-s StatusLED Color 5 # Yellow
 move dispenserData dispenserValues
 move Instruction 20000
 jal DispenseLoop
