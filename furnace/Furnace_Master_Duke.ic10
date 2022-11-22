@@ -15,6 +15,9 @@ alias Instruction r15
 s StatusLED Color 2 # Green
 s db Setting 0
 
+s FurnaceChute Setting 0
+s FurnaceChute SettingOutput 0
+
 Main:
 yield
 
