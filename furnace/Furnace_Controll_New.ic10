@@ -3,7 +3,7 @@ alias HotPump d0
 alias ColdPump d1
 alias ExhaustPump d2
 alias OverrideLever d3
-alias DebugMem d4
+
 define FURNACE 545937711
 define EMPTYPRESS 10
 define UNSAFEPRESS 59000
@@ -114,7 +114,6 @@ sub r0 MinTemp CurTemp
 div r0 r0 CurTemp
 mul r0 r0 100
 max r0 r0 5
-s DebugMem Setting r0
 s HotPump Setting r0
 sb FURNACE Activate 1
 j start
