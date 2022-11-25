@@ -2,39 +2,69 @@ alias GoButton d0
 alias DisplayChip1 d1
 alias DisplayChip2 d2
 
-define NUMPRIZES 43
-
-move r1 0
+define NUMPRIZES 5
 
 Start:
 yield
-l r0 GoButton Setting
-beqz r0 Start
+l r10 GoButton Setting
+beqz r10 Start
 
 Scramble:
-rand r2
-mul r2 r2 8
-trunc r2 r2
-rand r3
-mul r3 r3 NUMPRIZES
-trunc r3 r3
-mul r0 r2 100
-add r0 r0 r3
-add r0 r0 1001
+rand r12
+mul r12 r12 9
+trunc r12 r12
+rand r13
+mul r13 r13 NUMPRIZES
+trunc r13 r13
+mul r10 r12 100
+add r10 r10 r13
+add r10 r10 1001
+move rr12 r13
 
-s DisplayChip1 Setting r0
-s DisplayChip2 Setting r0
+jal SetChips
+l r10 GoButton Setting
+bnez r10 Scramble
 
-WaitForChips:
-yield
-l r1 DisplayChip1 Setting
-l r2 DisplayChip2 Setting
-or r1 r1 r2
-bnez r1 WaitForChips
-
-sleep 0.5
-
-l r0 GoButton Setting
-bnez r0 Scramble
+move r10 012
+jal CheckPrize
+move r10 345
+jal CheckPrize
+move r10 678
+jal CheckPrize
+move r10 036
+jal CheckPrize
+move r10 147
+jal CheckPrize
+move r10 258
+jal CheckPrize
+move r10 048
+jal CheckPrize
+move r10 246
+jal CheckPrize
 
 j Start
+
+SetChips:
+s DisplayChip1 Setting r10
+s DisplayChip2 Setting r10
+WaitForChips:
+yield
+l r11 DisplayChip1 Setting
+l r12 DisplayChip2 Setting
+or r11 r11 r12
+bnez r11 WaitForChips
+j ra
+
+CheckPrize:
+div r11 r10 100
+trunc r11 r11
+mod r12 r10 100
+mod r13 r12 10
+div r12 r12 10
+trunc r12 r12
+
+seq r14 rr11 rr12
+seq r15 rr11 rr13
+and r15 r15 r14
+bnez r15 SetChips
+j ra
