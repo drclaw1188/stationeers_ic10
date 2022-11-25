@@ -18,6 +18,7 @@ j Start
 ChangeDisplay:
 div r9 InstData 100
 trunc r9 r9
+bgt r9 5 ra
 mod sp InstData 100
 s dr9 Setting 0
 yield
@@ -32,16 +33,31 @@ trunc r9 r9
 mod r8 InstData 100
 mod r7 r8 10
 div r8 r8 10
+trunc r8 r8
 move r6 5
-l r5 dr9 Setting
+move r1 0
+move r2 0
+move r3 0
+brgt r9 5 2
+l r3 dr9 Setting
+brgt r8 5 2
+l r2 dr8 Setting
+brgt r7 5 2
+l r1 dr7 Setting
 ContinueFlashing:
+breqz r3 2
 s dr9 Setting 0
+breqz r2 2
 s dr8 Setting 0
+breqz r1 2
 s dr7 Setting 0
 yield
-s dr9 Setting r5
-s dr8 Setting r5
-s dr7 Setting r5
+breqz r3 2
+s dr9 Setting r3
+breqz r2 2
+s dr8 Setting r2
+breqz r1 2
+s dr7 Setting r1
 yield
 sub r6 r6 1
 bgtz r6 ContinueFlashing
