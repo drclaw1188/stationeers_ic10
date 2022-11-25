@@ -1,0 +1,40 @@
+alias GoButton d0
+alias DisplayChip1 d1
+alias DisplayChip2 d2
+
+define NUMPRIZES 43
+
+move r1 0
+
+Start:
+yield
+l r0 GoButton Setting
+beqz r0 Start
+
+Scramble:
+rand r2
+mul r2 r2 8
+trunc r2 r2
+rand r3
+mul r3 r3 NUMPRIZES
+trunc r3 r3
+mul r0 r2 100
+add r0 r0 r3
+add r0 r0 1001
+
+s DisplayChip1 Setting r0
+s DisplayChip2 Setting r0
+
+WaitForChips:
+yield
+l r1 DisplayChip1 Setting
+l r2 DisplayChip2 Setting
+or r1 r1 r2
+bnez r1 WaitForChips
+
+sleep 0.5
+
+l r0 GoButton Setting
+bnez r0 Scramble
+
+j Start
