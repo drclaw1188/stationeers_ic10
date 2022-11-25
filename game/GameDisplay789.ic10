@@ -34,6 +34,7 @@ trunc r9 r9
 mod r8 InstData 100
 mod r7 r8 10
 div r8 r8 10
+trunc r8 r8
 move r6 5
 move r1 0
 move r2 0
