@@ -63,6 +63,7 @@ mod r13 r12 10
 div r12 r12 10
 trunc r12 r12
 
+add r10 r10 2000
 seq r14 rr11 rr12
 seq r15 rr11 rr13
 and r15 r15 r14
