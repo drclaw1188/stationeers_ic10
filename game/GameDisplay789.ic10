@@ -1,0 +1,67 @@
+alias Instruction r15
+alias InstData r14
+
+Start:
+yield
+
+l r0 db Setting
+beqz r0 Start
+
+mod InstData r0 1000
+div Instruction r0 1000
+trunc Instruction Instruction
+beqal Instruction 1 ChangeDisplay
+beqal Instruction 2 FlashDisplay
+s db Setting 0
+j Start
+
+ChangeDisplay:
+div r9 InstData 100
+trunc r9 r9
+blt r9 6 ra
+sub r9 r9 6
+mod sp InstData 100
+s dr9 Setting 0
+yield
+peek r8
+s dr9 Setting r8
+yield
+j ra
+
+FlashDisplay:
+div r9 InstData 100
+trunc r9 r9
+mod r8 InstData 100
+mod r7 r8 10
+div r8 r8 10
+move r6 5
+move r1 0
+move r2 0
+move r3 0
+brlt r9 6 3
+sub r9 r9 6
+l r3 dr9 Setting
+brlt r8 6 3
+sub r8 r8 6
+l r2 dr8 Setting
+brlt r7 6 3
+sub r7 r7 6
+l r1 dr7 Setting
+ContinueFlashing:
+breqz r3 2
+s dr9 Setting 0
+breqz r2 2
+s dr8 Setting 0
+breqz r1 2
+s dr7 Setting 0
+yield
+breqz r3 2
+s dr9 Setting r3
+breqz r2 2
+s dr8 Setting r2
+breqz r1 2
+s dr7 Setting r1
+yield
+sub r6 r6 1
+bgtz r6 ContinueFlashing
+j ra
