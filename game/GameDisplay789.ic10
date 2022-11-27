@@ -28,6 +28,22 @@ s dr9 Setting r8
 yield
 j ra
 
+ChangeOnly:
+div r9 InstData 100
+trunc r9 r9
+blt r9 6 ra
+sub r9 r9 6
+mod sp InstData 100
+peek r8
+s dr9 Setting r8
+j ra
+
+BlankAll:
+s d0 Setting 0
+s d1 Setting 0
+s d2 Setting 0
+j ra
+
 FlashDisplay:
 div r9 InstData 100
 trunc r9 r9
