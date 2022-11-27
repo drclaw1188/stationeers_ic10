@@ -12,6 +12,8 @@ div Instruction r0 1000
 trunc Instruction Instruction
 beqal Instruction 1 ChangeDisplay
 beqal Instruction 2 FlashDisplay
+beqal Instruction 3 ChangeOnly
+beqal Instruction 4 BlankAll
 s db Setting 0
 j Start
 
