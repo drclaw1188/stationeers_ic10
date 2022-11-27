@@ -1,6 +1,8 @@
 alias Instruction r15
 alias InstData r14
 
+s db Setting 0
+
 Start:
 yield
 
@@ -44,6 +46,7 @@ BlankAll:
 s d0 Setting 0
 s d1 Setting 0
 s d2 Setting 0
+yield
 j ra
 
 FlashDisplay:
