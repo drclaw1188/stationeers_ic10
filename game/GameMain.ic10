@@ -9,6 +9,19 @@ yield
 l r10 GoButton Setting
 beqz r10 Start
 
+move r13 0
+move r10 4000
+jal SetChips
+Reset:
+rand r11
+move rr13 r11
+mul r10 r13 100
+add r10 r10 r11
+add r10 r10 3000
+jal SetChips
+add r13 r13 1
+blt r13 9 Reset
+
 Scramble:
 rand r12
 mul r12 r12 9
