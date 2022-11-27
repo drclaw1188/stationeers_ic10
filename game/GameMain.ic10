@@ -1,8 +1,14 @@
 alias GoButton d0
 alias DisplayChip1 d1
 alias DisplayChip2 d2
+alias ScoreBoard d3
 
-define NUMPRIZES 5
+alias Score r9
+
+define NUMPRIZES 4
+
+move Score 0
+s ScoreBoard Setting Score
 
 Start:
 yield
@@ -14,6 +20,9 @@ move r10 4000
 jal SetChips
 Reset:
 rand r11
+mul r11 r11 NUMPRIZES
+trunc r11 r11
+add r11 r11 1
 move rr13 r11
 mul r10 r13 100
 add r10 r10 r11
@@ -23,21 +32,29 @@ add r13 r13 1
 blt r13 9 Reset
 
 Scramble:
+l r10 GoButton Setting
+beqz r10 CheckForPrizes
+
 rand r12
 mul r12 r12 9
 trunc r12 r12
 rand r13
 mul r13 r13 NUMPRIZES
 trunc r13 r13
+add r13 r13 1
 mul r10 r12 100
 add r10 r10 r13
-add r10 r10 1001
+add r10 r10 1000
+
+beq rr12 r13 Scramble
 move rr12 r13
 
+sub Score Score 5
+s ScoreBoard Setting Score
 jal SetChips
-l r10 GoButton Setting
-bnez r10 Scramble
+j Scramble
 
+CheckForPrizes:
 move r10 012
 jal CheckPrize
 move r10 345
@@ -80,5 +97,7 @@ add r10 r10 2000
 seq r14 rr11 rr12
 seq r15 rr11 rr13
 and r15 r15 r14
-bnez r15 SetChips
-j ra
+beqz r15 ra
+add Score Score 100
+s ScoreBoard Setting Score
+j SetChips
