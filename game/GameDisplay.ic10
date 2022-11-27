@@ -12,6 +12,8 @@ div Instruction r0 1000
 trunc Instruction Instruction
 beqal Instruction 1 ChangeDisplay
 beqal Instruction 2 FlashDisplay
+beqal Instruction 3 ChangeOnly
+beqal Instruction 4 BlankAll
 s db Setting 0
 j Start
 
@@ -25,6 +27,24 @@ yield
 peek r8
 s dr9 Setting r8
 yield
+j ra
+
+ChangeOnly:
+div r9 InstData 100
+trunc r9 r9
+bgt r9 5 ra
+mod sp InstData 100
+peek r8
+s dr9 Setting r8
+j ra
+
+BlankAll:
+s d0 Setting 0
+s d1 Setting 0
+s d2 Setting 0
+s d3 Setting 0
+s d4 Setting 0
+s d5 Setting 0
 j ra
 
 FlashDisplay:
