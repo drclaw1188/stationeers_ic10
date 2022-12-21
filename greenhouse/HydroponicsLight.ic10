@@ -1,4 +1,5 @@
 alias Hydroponics d0
+alias DaylightSensor d1
 
 alias AverageEfficiency r15
 alias PreviousAverage r14
@@ -7,6 +8,12 @@ alias LightOn r13
 start:
 sleep 10
 
+l r0 DaylightSensor Activate
+beqz r0 nightTime
+s Hydroponics On 0
+j start
+
+nightTime:
 move r1 3
 move PreviousAverage AverageEfficiency
 move AverageEfficiency 0
