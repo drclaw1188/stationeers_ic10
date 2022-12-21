@@ -17,6 +17,7 @@ nightTime:
 move r1 3
 move PreviousAverage AverageEfficiency
 move AverageEfficiency 0
+l LightOn Hydroponics On
 
 computeAverage:
 ls r0 Hydroponics r1 Efficiency
