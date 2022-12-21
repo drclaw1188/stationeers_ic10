@@ -1,0 +1,26 @@
+alias Hydroponics d0
+
+alias AverageEfficiency r15
+alias PreviousAverage r14
+alias LightOn r13
+
+start:
+sleep 10
+
+move r1 3
+move PreviousAverage AverageEfficiency
+move AverageEfficiency 0
+
+computeAverage:
+ls r0 Hydroponics r1 Efficiency
+add AverageEfficiency AverageEfficiency r0
+sub r1 r1 1
+bgez r1 computeAverage
+div AverageEfficiency AverageEfficiency 4
+s db Setting AverageEfficiency
+
+bge AverageEfficiency PreviousAverage start
+
+select LightOn LightOn 0 1
+s Hydroponics On LightOn
+j start
