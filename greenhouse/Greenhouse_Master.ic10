@@ -2,7 +2,8 @@ alias InsideSensor d0
 alias OxygenPump d1
 alias NitrogenPump d2
 alias CO2Pump d3
-alias GreenhouseFilt d4
+alias HeatingSwitch d4
+alias CoolingSwitch d5
 
 alias OxygenPercent r15
 alias CO2Percent r14
@@ -11,7 +12,9 @@ alias InsideTemp r12
 
 define MINO2 0.3
 define MINCO2 0.05
-define MINPRESS 100
+define MINPRESS 80
+define MINTEMP 295
+define MAXTEMP 305
 
 define FLASHINGLIGHT -1535893860
 define ALARMVOLATILES 0.05
@@ -30,6 +33,12 @@ l OxygenPercent InsideSensor RatioOxygen
 l CO2Percent InsideSensor RatioCarbonDioxide
 l InsidePressure InsideSensor Pressure
 l InsideTemp InsideSensor Temperature
+
+slt r0 InsideTemp MINTEMP
+s HeatingSwitch On r0
+
+sgt r0 InsideTemp MAXTEMP
+s CoolingSwitch On r0
 
 slt r0 OxygenPercent MINO2
 s OxygenPump On r0
@@ -56,11 +65,6 @@ or r0 r0 r1
 sgt r1 InsidePressure ALARMHIGHPRESS
 or r0 r0 r1
 slt r1 InsidePressure ALARMLOWPRESS
-or r0 r0 r1
-ls r1 GreenhouseFilt 0 Quantity
-ls r2 GreenhouseFilt 1 Quantity
-and r1 r1 r2
-seq r1 r1 0
 or r0 r0 r1
 sb FLASHINGLIGHT On r0
 
