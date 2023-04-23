@@ -18,7 +18,6 @@ start:
 yield
 
 l r0 DaylightSensor Horizontal
-sub r0 r0 90
 s SolarHorizonal Setting r0
 
 l r0 DaylightSensor Vertical
