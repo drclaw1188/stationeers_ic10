@@ -1,0 +1,116 @@
+alias RequestMem d0
+alias DispenserMem d1
+alias FurnaceIC d2
+alias FurnaceChute d3
+alias VendingMachine d4
+alias StatusLED d5
+
+alias IngotRequested r10
+alias dispenserValues r11
+alias LastImportCount r12
+alias dispenserData r13
+alias FurnaceNeeded r14
+alias Instruction r15
+
+s StatusLED Color 2 # Green
+s db Setting 0
+s FurnaceChute Setting 0
+s FurnaceChute SettingOutput 0
+
+Main:
+yield
+
+l IngotRequested RequestMem Setting
+beqz IngotRequested Main
+
+move dispenserValues 0
+seq r0 IngotRequested -404336834 # Copper 0
+select dispenserValues r0 103 dispenserValues
+seq r0 IngotRequested 226410516 # Gold 1
+select dispenserValues r0 104 dispenserValues
+seq r0 IngotRequested -1301215609 # Iron 2
+select dispenserValues r0 105 dispenserValues
+seq r0 IngotRequested 2134647745 # Lead 3
+select dispenserValues r0 106 dispenserValues
+seq r0 IngotRequested -1406385572 # Nickel 4
+select dispenserValues r0 107 dispenserValues
+seq r0 IngotRequested -290196476 # Silicon 5
+select dispenserValues r0 108 dispenserValues
+seq r0 IngotRequested -929742000 # Silver 6
+select dispenserValues r0 109 dispenserValues
+seq r0 IngotRequested 502280180 # Electrum 7
+select dispenserValues r0 104109 dispenserValues
+seq r0 IngotRequested -82508479 # Solder 8
+select dispenserValues r0 105106 dispenserValues
+seq r0 IngotRequested -654790771 # Steel 9
+select dispenserValues r0 201305 dispenserValues
+seq r0 IngotRequested -297990285 # Invar 10
+select dispenserValues r0 105107 dispenserValues
+seq r0 IngotRequested 1058547521 # Constantan 11
+select dispenserValues r0 103107 dispenserValues
+seq r0 IngotRequested -787796599 # Inconel 12
+select dispenserValues r0 204107110 dispenserValues
+seq r0 IngotRequested -1897868623 # Setllite 13
+select dispenserValues r0 208109202 dispenserValues
+seq r0 IngotRequested 1579842814 # Hastelloy 14
+select dispenserValues r0 202107209 dispenserValues
+seq r0 IngotRequested 412924554 # Astroloy 15
+select dispenserValues r0 103210202 dispenserValues
+seq r0 IngotRequested 156348098 # Waspaloy 16
+select dispenserValues r0 206109107 dispenserValues
+beqz dispenserValues Main
+
+s db Setting IngotRequested
+s StatusLED Color 5 # Yellow
+
+sgt FurnaceNeeded dispenserValues 1000
+l LastImportCount VendingMachine Setting
+
+move dispenserData dispenserValues
+move Instruction 10000
+jal DispenseLoop
+
+breqz FurnaceNeeded 2
+s FurnaceIC Setting IngotRequested
+
+move dispenserData dispenserValues
+move Instruction 20000
+jal DispenseLoop
+
+WaitForImport:
+yield
+l r1 VendingMachine Setting
+beq LastImportCount r1 WaitForImport
+
+s StatusLED Color 2 # Green
+s db Setting 0
+
+Done:
+s FurnaceIC Setting 0
+s DispenserMem Setting 0
+j Main
+
+DispenseLoop:
+seqz r0 FurnaceNeeded
+s FurnaceChute Mode r0
+yield
+
+mod r0 dispenserData 1000
+add r0 r0 Instruction
+s DispenserMem Setting r0
+
+WaitSiloLoop:
+yield
+l r1 DispenserMem Setting
+beq r1 r0 WaitSiloLoop
+
+bnez r1 MissingIngot
+
+div dispenserData dispenserData 1000
+trunc dispenserData dispenserData
+bnez dispenserData DispenseLoop
+j ra
+
+MissingIngot:
+s StatusLED Color 4 # Red
+j Done
