@@ -10,9 +10,7 @@ define FURNACE 545937711
 define EMPTYPRESS 10
 define UNSAFEPRESS 59000
 define SAFEPRESS 58000
-define STACKSIZE 85
 define MININGOTSTACK 50
-define MAXTANKPRESS 20000
 
 alias CurTemp r8
 alias CurPress r9
