@@ -33,56 +33,57 @@ CheckPrinter:
 move IngotNeeded 0
 lr r0 dr9 Contents HASH("ItemIronIngot")
 slt r0 r0 MINIMUMINGOT
-select IngotNeeded r0 -1301215609 IngotNeeded
+select IngotNeeded r0 HASH("ItemIronIngot") IngotNeeded
 lr r0 dr9 Required HASH("ItemIronIngot")
-select IngotNeeded r0 -1301215609 IngotNeeded
+select IngotNeeded r0 HASH("ItemIronIngot") IngotNeeded
 lr r0 dr9 Contents HASH("ItemCopperIngot")
 slt r0 r0 MINIMUMINGOT
-select IngotNeeded r0 -404336834 IngotNeeded
+select IngotNeeded r0 HASH("ItemCopperIngot") IngotNeeded
 lr r0 dr9 Required HASH("ItemCopperIngot")
-select IngotNeeded r0 -404336834 IngotNeeded
+select IngotNeeded r0 HASH("ItemCopperIngot") IngotNeeded
 lr r0 dr9 Contents HASH("ItemGoldIngot")
 slt r0 r0 MINIMUMINGOT
-select IngotNeeded r0 226410516 IngotNeeded
+select IngotNeeded r0 HASH("ItemGoldIngot") IngotNeeded
 lr r0 dr9 Required HASH("ItemGoldIngot")
-select IngotNeeded r0 226410516 IngotNeeded
+select IngotNeeded r0 HASH("ItemGoldIngot") IngotNeeded
 lr r0 dr9 Required HASH("ItemLeadIngot")
-select IngotNeeded r0 2134647745 IngotNeeded
+select IngotNeeded r0 HASH("ItemLeadIngot") IngotNeeded
 lr r0 dr9 Required HASH("ItemNickelIngot")
-select IngotNeeded r0 -1406385572 IngotNeeded
+select IngotNeeded r0 HASH("ItemNickelIngot") IngotNeeded
 lr r0 dr9 Contents HASH("ItemSiliconIngot")
 slt r0 r0 MINIMUMINGOT
-select IngotNeeded r0 -290196476 IngotNeeded
+select IngotNeeded r0 HASH("ItemSiliconIngot") IngotNeeded
 lr r0 dr9 Required HASH("ItemSiliconIngot")
-select IngotNeeded r0 -290196476 IngotNeeded
+select IngotNeeded r0 HASH("ItemSiliconIngot") IngotNeeded
 lr r0 dr9 Required HASH("ItemSilverIngot")
-select IngotNeeded r0 -929742000 IngotNeeded
+select IngotNeeded r0 HASH("ItemSilverIngot") IngotNeeded
 lr r0 dr9 Required HASH("ItemConstantanIngot")
-select IngotNeeded r0 1058547521 IngotNeeded
+select IngotNeeded r0 HASH("ItemConstantanIngot") IngotNeeded
 lr r0 dr9 Required HASH("ItemElectrumIngot")
-select IngotNeeded r0 502280180 IngotNeeded
+select IngotNeeded r0 HASH("ItemElectrumIngot") IngotNeeded
 lr r0 dr9 Required HASH("ItemInvarIngot")
-select IngotNeeded r0 -297990285 IngotNeeded
+select IngotNeeded r0 HASH("ItemInvarIngot") IngotNeeded
 lr r0 dr9 Required HASH("ItemSolderIngot")
-select IngotNeeded r0 -82508479 IngotNeeded
+select IngotNeeded r0 HASH("ItemSolderIngot") IngotNeeded
 lr r0 dr9 Contents HASH("ItemSteelIngot")
 slt r0 r0 MINIMUMINGOT
-select IngotNeeded r0 -654790771 IngotNeeded
+select IngotNeeded r0 HASH("ItemSteelIngot") IngotNeeded
 lr r0 dr9 Required HASH("ItemSteelIngot")
-select IngotNeeded r0 -654790771 IngotNeeded
+select IngotNeeded r0 HASH("ItemSteelIngot") IngotNeeded
 lr r0 dr9 Required HASH("ItemAstroloyIngot")
-select IngotNeeded r0 412924554 IngotNeeded
+select IngotNeeded r0 HASH("ItemAstroloyIngot") IngotNeeded
 lr r0 dr9 Required HASH("ItemHastelloyIngot")
-select IngotNeeded r0 1579842814 IngotNeeded
+select IngotNeeded r0 HASH("ItemHastelloyIngot") IngotNeeded
 lr r0 dr9 Required HASH("ItemInconelIngot")
-select IngotNeeded r0 -787796599 IngotNeeded
+select IngotNeeded r0 HASH("ItemInconelIngot") IngotNeeded
 lr r0 dr9 Required HASH("ItemStelliteIngot")
-select IngotNeeded r0 -1897868623 IngotNeeded
+select IngotNeeded r0 HASH("ItemStelliteIngot") IngotNeeded
 lr r0 dr9 Required HASH("ItemWaspaloyIngot")
-select IngotNeeded r0 156348098 IngotNeeded
+select IngotNeeded r0 HASH("ItemWaspaloyIngot") IngotNeeded
 beqz IngotNeeded ra
 
 s db Setting IngotNeeded
+sb LED Color 5
 move r5 2
 FindIngot:
 ls r0 VendingMachine r5 OccupantHash
@@ -94,19 +95,19 @@ yield
 j ra
 
 DeliverIngot:
-sb LED Color 5
 seq r1 r9 1 
 sbn DCUTERIGHT HASH("DC:Autolathe") Mode r1
-sbn DCUTERLEFT HASH("DC:Autolathe") Mode r1
+sbn DCUTELEFT HASH("DC:Autolathe") Mode r1
 seq r1 r9 2
 sbn DCUTERIGHT HASH("DC:PipeBender") Mode r1
-sbn DCUTERLEFT HASH("DC:PipeBender") Mode r1
+sbn DCUTELEFT HASH("DC:PipeBender") Mode r1
 seq r1 r9 3
 sbn DCUTERIGHT HASH("DC:Electronics") Mode r1
-sbn DCUTERLEFT HASH("DC:Electronics") Mode r1
+sbn DCUTELEFT HASH("DC:Electronics") Mode r1
 seq r1 r9 4
 sbn DCUTERIGHT HASH("DC:Tools") Mode r1
-sbn DCUTERLEFT HASH("DC:Tools") Mode r1
+sbn DCUTELEFT HASH("DC:Tools") Mode r1
+l LastImportCount dr9 ImportCount
 s VendingMachine RequestHash 0
 yield
 s VendingMachine RequestHash IngotNeeded
