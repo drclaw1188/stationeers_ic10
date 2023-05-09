@@ -3,12 +3,11 @@ alias Autolathe d1
 alias PipeBender d2
 alias Electronics d3
 alias Tools d4
-alias SorterChip d5
 
 define MINIMUMINGOT 50
-define VENDINGMACHINE -443130773
 define LED 1944485013
-define BUTTON 491845673
+define DCUTERIGHT 163728359
+define DCUTELEFT 648608238
 
 alias IngotNeeded r11
 alias LastImportCount r12
@@ -20,7 +19,6 @@ s db Setting MissingIngot
 select r0 MissingIngot 4 2
 sb LED Color r0
 move MissingIngot 0
-
 move r9 1
 jal CheckPrinter
 move r9 2
@@ -33,54 +31,54 @@ j start
 
 CheckPrinter:
 move IngotNeeded 0
-lr r0 dr9 Contents Iron
+lr r0 dr9 Contents HASH("ItemIronIngot")
 slt r0 r0 MINIMUMINGOT
 select IngotNeeded r0 -1301215609 IngotNeeded
-lr r0 dr9 Required Iron
+lr r0 dr9 Required HASH("ItemIronIngot")
 select IngotNeeded r0 -1301215609 IngotNeeded
-lr r0 dr9 Contents Copper
+lr r0 dr9 Contents HASH("ItemCopperIngot")
 slt r0 r0 MINIMUMINGOT
 select IngotNeeded r0 -404336834 IngotNeeded
-lr r0 dr9 Required Copper
+lr r0 dr9 Required HASH("ItemCopperIngot")
 select IngotNeeded r0 -404336834 IngotNeeded
-lr r0 dr9 Contents Gold
+lr r0 dr9 Contents HASH("ItemGoldIngot")
 slt r0 r0 MINIMUMINGOT
 select IngotNeeded r0 226410516 IngotNeeded
-lr r0 dr9 Required Gold
+lr r0 dr9 Required HASH("ItemGoldIngot")
 select IngotNeeded r0 226410516 IngotNeeded
-lr r0 dr9 Required Lead
+lr r0 dr9 Required HASH("ItemLeadIngot")
 select IngotNeeded r0 2134647745 IngotNeeded
-lr r0 dr9 Required Nickel
+lr r0 dr9 Required HASH("ItemNickelIngot")
 select IngotNeeded r0 -1406385572 IngotNeeded
-lr r0 dr9 Contents Silicon
+lr r0 dr9 Contents HASH("ItemSiliconIngot")
 slt r0 r0 MINIMUMINGOT
 select IngotNeeded r0 -290196476 IngotNeeded
-lr r0 dr9 Required Silicon
+lr r0 dr9 Required HASH("ItemSiliconIngot")
 select IngotNeeded r0 -290196476 IngotNeeded
-lr r0 dr9 Required Silver
+lr r0 dr9 Required HASH("ItemSilverIngot")
 select IngotNeeded r0 -929742000 IngotNeeded
-lr r0 dr9 Required Constantan
+lr r0 dr9 Required HASH("ItemConstantanIngot")
 select IngotNeeded r0 1058547521 IngotNeeded
-lr r0 dr9 Required Electrum
+lr r0 dr9 Required HASH("ItemElectrumIngot")
 select IngotNeeded r0 502280180 IngotNeeded
-lr r0 dr9 Required Invar
+lr r0 dr9 Required HASH("ItemInvarIngot")
 select IngotNeeded r0 -297990285 IngotNeeded
-lr r0 dr9 Required Solder
+lr r0 dr9 Required HASH("ItemSolderIngot")
 select IngotNeeded r0 -82508479 IngotNeeded
-lr r0 dr9 Contents Steel
+lr r0 dr9 Contents HASH("ItemSteelIngot")
 slt r0 r0 MINIMUMINGOT
 select IngotNeeded r0 -654790771 IngotNeeded
-lr r0 dr9 Required Steel
+lr r0 dr9 Required HASH("ItemSteelIngot")
 select IngotNeeded r0 -654790771 IngotNeeded
-lr r0 dr9 Required Astroloy
+lr r0 dr9 Required HASH("ItemAstroloyIngot")
 select IngotNeeded r0 412924554 IngotNeeded
-lr r0 dr9 Required Hastelloy
+lr r0 dr9 Required HASH("ItemHastelloyIngot")
 select IngotNeeded r0 1579842814 IngotNeeded
-lr r0 dr9 Required Inconel
+lr r0 dr9 Required HASH("ItemInconelIngot")
 select IngotNeeded r0 -787796599 IngotNeeded
-lr r0 dr9 Required Stellite
+lr r0 dr9 Required HASH("ItemStelliteIngot")
 select IngotNeeded r0 -1897868623 IngotNeeded
-lr r0 dr9 Required Waspaloy
+lr r0 dr9 Required HASH("ItemWaspaloyIngot")
 select IngotNeeded r0 156348098 IngotNeeded
 beqz IngotNeeded ra
 
@@ -92,14 +90,23 @@ beq r0 IngotNeeded DeliverIngot
 add r5 r5 1
 blt r5 102 FindIngot
 move MissingIngot IngotNeeded
-sb LED Color 4
 yield
 j ra
 
 DeliverIngot:
 sb LED Color 5
-s SorterChip Setting r9
-l LastImportCount dr9 ImportCount
+seq r1 r9 1 
+sbn DCUTERIGHT HASH("DC:Autolathe") Mode r1
+sbn DCUTERLEFT HASH("DC:Autolathe") Mode r1
+seq r1 r9 2
+sbn DCUTERIGHT HASH("DC:PipeBender") Mode r1
+sbn DCUTERLEFT HASH("DC:PipeBender") Mode r1
+seq r1 r9 3
+sbn DCUTERIGHT HASH("DC:Electronics") Mode r1
+sbn DCUTERLEFT HASH("DC:Electronics") Mode r1
+seq r1 r9 4
+sbn DCUTERIGHT HASH("DC:Tools") Mode r1
+sbn DCUTERLEFT HASH("DC:Tools") Mode r1
 s VendingMachine RequestHash 0
 yield
 s VendingMachine RequestHash IngotNeeded
@@ -108,8 +115,5 @@ WaitForDelivery:
 yield
 l r0 dr9 ImportCount
 beq r0 LastImportCount WaitForDelivery
-s SorterChip Setting 0
-sb LED Color 2
-s db Setting 0
 yield
 j ra
