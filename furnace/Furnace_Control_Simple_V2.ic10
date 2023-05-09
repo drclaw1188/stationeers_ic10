@@ -25,6 +25,9 @@ start:
 yield
 lb CurPress FURNACE Pressure Maximum
 lb CurTemp FURNACE Temperature Maximum
+s ColdPump Setting 0
+s HotPump Setting 0
+s ExhaustPump Setting 0
 bgt CurPress UNSAFEPRESS SafetyFirst
 
 l sp Dial Setting
