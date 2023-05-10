@@ -5,6 +5,8 @@ These are the scripts I use for automating printers in Stationeers. I learned an
 |AutoStop|Automatically stops the printer once it has printed out the number of items equal to its attached stacker's setting at the time the print job started.|https://github.com/drclaw1188/stationeers_ic10/blob/main/printers/PrinterAutoStop.ic10|
 |PrinterMaster|Delivers ingots to printers automatically from a vending machine.|https://github.com/drclaw1188/stationeers_ic10/blob/main/printers/PrinterMaster_v3.ic10|
 
+The two functions work independently of each other, so you can set up only one or the other depending on your needs. I like to setup the autostop earlier in the game since it only requires that each printer have a stacker attached to it, and just one IC10 chip and housing.
+
 ## Printer AutoStop
 Automatically stops the printer. Printers need to have stackers attached to them and be uniquely labeled. When a new print job is started, the program records the stack size setting on the attched stacker and will stop the printer once the export count increases by that number. The chip only supports three printers, usually the Autolathe, Electronics Printer, and Pipe Bender. This is due to a limitation in the number of pins, and I find I don't use the Tools printer often enough to bother attaching a stacker to it. It might be possible to add support for a Tools printer by making use of the *lbn* and *sbn* IC10 commands. This script also turns the attached stack on or off to match the current on/off status of its printer.
 
