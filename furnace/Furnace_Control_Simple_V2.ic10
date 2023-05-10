@@ -1,4 +1,5 @@
-# Madcat's advanced furnace control (simple version)
+# SemiPrimes's advanced furnace control (simple version)
+# Requires stack pre-programming
 alias HotPump d0
 alias ColdPump d1
 alias ExhaustPump d2
@@ -58,10 +59,10 @@ seq r1 r0 IngotHash
 lb r0 FURNACE Reagents Average
 sge r0 r0 MININGOTSTACK
 and r0 r0 r1
-breqz r0 2
+breqz r0 5
+sb FURNACE Open 1
 yield
-sb FURNACE Open r0
-breqz r0 2
+sb FURNACE Open 0
 yield
 
 select r0 TargetPress TargetPress MaxPress
