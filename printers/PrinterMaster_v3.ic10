@@ -16,10 +16,10 @@ start:
 yield
 sb DCUTERIGHT Setting 0
 sb DCUTERIGHT SettingOutput 0
+sb DCUTERIGHT On 1
 sb DCUTELEFT Setting 0
 sb DCUTELEFT SettingOutput 0
 sb DCUTELEFT On 1
-sb DCUTERIGHT On 1
 sb LED Color 2
 move r9 1
 jal CheckPrinter
