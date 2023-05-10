@@ -10,7 +10,7 @@ Automatically stops the printer. Printers need to have stackers attached to them
 
 ### Devices
 
-|Device Name|Device Number|Description|Required?|
+|Device Name|Device Number|Description|Required|
 --- | --- | ---|
 |AutoLathe|d0|The Autolathe Printer|Yes|
 |AutoLatheStacker|d1|The stacker attached to the Autolathe|Yes|
