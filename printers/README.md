@@ -13,7 +13,7 @@ Automatically stops the printer. Printers need to have stackers attached to them
 --- | --- | ---|
 |AutoLathe|d0|The Autolathe Printer|Yes|
 |AutoLatheStacker|d1|The stacker attached to the Autolathe|Yes|
-|ElectronicsPrinter|The Electronics Printer|Yes|
-|ElectronicsStacker|The stacker attached to the Electronics Printer|Yes|
-|PipeBender|The Pipe Bender Printer|Yes|
-|PipeBenderStacker|The stacker attached to the Pipe Bender Printer|Yes|
+|ElectronicsPrinter|d2|The Electronics Printer|Yes|
+|ElectronicsStacker|d3|The stacker attached to the Electronics Printer|Yes|
+|PipeBender|d4|The Pipe Bender Printer|Yes|
+|PipeBenderStacker|d5|The stacker attached to the Pipe Bender Printer|Yes|
