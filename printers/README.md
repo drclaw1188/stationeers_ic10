@@ -9,6 +9,7 @@ These are the scripts I use for automating printers in Stationeers. I learned an
 Automatically stops the printer. Printers need to have stackers attached to them and be uniquely labeled. When a new print job is started, the program records the stack size setting on the attched stacker and will stop the printer once the export count increases by that number. The chip only supports three printers, usually the Autolathe, Electronics Printer, and Pipe Bender. This is due to a limitation in the number of pins, and I find I don't use the Tools printer often enough to bother attaching a stacker to it. It might be possible to add support for a Tools printer by making use of the *lbn* and *sbn* IC10 commands. This script also turns the attached stack on or off to match the current on/off status of its printer.
 
 ### Devices
+
 |Device Name|Device Number|Description|Required?|
 --- | --- | ---|
 |AutoLathe|d0|The Autolathe Printer|Yes|
