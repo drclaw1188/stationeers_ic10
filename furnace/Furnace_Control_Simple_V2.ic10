@@ -1,5 +1,4 @@
-# SemiPrimes's advanced furnace control (simple version)
-# Requires stack pre-programming
+# SemiPrimes's advanced furnace control (simple version). Requires stack pre-programming
 alias HotPump d0
 alias ColdPump d1
 alias ExhaustPump d2
@@ -12,6 +11,9 @@ define EMPTYPRESS 10
 define UNSAFEPRESS 59000
 define SAFEPRESS 58000
 define MININGOTSTACK 50
+define STACKER1 1585641623
+define STACKER2 -2020231820
+define SORTER -1009150565
 
 alias CurTemp r8
 alias CurPress r9
@@ -40,20 +42,20 @@ pop MinPress
 pop MaxTemp
 pop MinTemp
 s db Setting IngotHash
-
 l r0 OverrideLever Setting
 bnez r0 start
-
 l r0 EngageLever Setting
 s ColdPump On r0
 s HotPump On r0
 s ExhaustPump On r0
+sb STACKER1 On r0
+sb STACKER2 On r0
+sb SORTER On r0
 beqz r0 DisabledMode
 
 sb FURNACE On 1
 sb FURNACE SettingInput 100
 sb FURNACE SettingOutput 0
-
 lb r0 FURNACE RecipeHash Average
 seq r1 r0 IngotHash
 lb r0 FURNACE Reagents Average
@@ -64,7 +66,6 @@ sb FURNACE Open 1
 yield
 sb FURNACE Open 0
 yield
-
 select r0 TargetPress TargetPress MaxPress
 bgt CurPress r0 DecreasePress
 move TargetPress 0
