@@ -93,23 +93,22 @@ beq r0 Ingot DeliverIngot
 add r5 r5 1
 blt r5 102 FindIngot
 sb LED Color 4
-s db Setting Ingot
 sleep 5
 j ra
 
 DeliverIngot:
 seq r1 r9 1
-sbn DCUTERIGHT HASH("DCAutolathe") Mode r1
-sbn DCUTELEFT HASH("DCAutolathe") Mode r1
+sbn DCUTERIGHT HASH("DC:Autolathe") Mode r1
+sbn DCUTELEFT HASH("DC:Autolathe") Mode r1
 seq r1 r9 2
-sbn DCUTERIGHT HASH("DCPipeBender") Mode r1
-sbn DCUTELEFT HASH("DCPipeBender") Mode r1
+sbn DCUTERIGHT HASH("DC:PipeBender") Mode r1
+sbn DCUTELEFT HASH("DC:PipeBender") Mode r1
 seq r1 r9 3
-sbn DCUTERIGHT HASH("DCElectronics") Mode r1
-sbn DCUTELEFT HASH("DCElectronics") Mode r1
+sbn DCUTERIGHT HASH("DC:Electronics") Mode r1
+sbn DCUTELEFT HASH("DC:Electronics") Mode r1
 seq r1 r9 4
-sbn DCUTERIGHT HASH("DCTools") Mode r1
-sbn DCUTELEFT HASH("DCTools") Mode r1
+sbn DCUTERIGHT HASH("DC:Tools") Mode r1
+sbn DCUTELEFT HASH("DC:Tools") Mode r1
 l LastImportCount dr9 ImportCount
 s VendingMachine RequestHash 0
 yield
