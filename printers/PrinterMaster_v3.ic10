@@ -9,16 +9,18 @@ define LED 1944485013
 define DCUTERIGHT 163728359
 define DCUTELEFT 648608238
 
-alias IngotNeeded r11
+alias Ingot r11
 alias LastImportCount r12
-alias MissingIngot r13
 
 start:
 yield
-s db Setting MissingIngot
-select r0 MissingIngot 4 2
-sb LED Color r0
-move MissingIngot 0
+sb DCUTERIGHT Setting 0
+sb DCUTERIGHT SettingOutput 0
+sb DCUTELEFT Setting 0
+sb DCUTELEFT SettingOutput 0
+sb DCUTELEFT On 1
+sb DCUTERIGHT On 1
+sb LED Color 2
 move r9 1
 jal CheckPrinter
 move r9 2
@@ -30,89 +32,91 @@ jal CheckPrinter
 j start
 
 CheckPrinter:
-move IngotNeeded 0
-lr r0 dr9 Contents HASH("ItemIronIngot")
+move Ingot 0
+lr r0 dr9 Contents HASH("Iron")
 slt r0 r0 MINIMUMINGOT
-select IngotNeeded r0 HASH("ItemIronIngot") IngotNeeded
-lr r0 dr9 Required HASH("ItemIronIngot")
-select IngotNeeded r0 HASH("ItemIronIngot") IngotNeeded
-lr r0 dr9 Contents HASH("ItemCopperIngot")
+select Ingot r0 HASH("ItemIronIngot") Ingot
+lr r0 dr9 Required HASH("Iron")
+select Ingot r0 HASH("ItemIronIngot") Ingot
+lr r0 dr9 Contents HASH("Copper")
 slt r0 r0 MINIMUMINGOT
-select IngotNeeded r0 HASH("ItemCopperIngot") IngotNeeded
-lr r0 dr9 Required HASH("ItemCopperIngot")
-select IngotNeeded r0 HASH("ItemCopperIngot") IngotNeeded
-lr r0 dr9 Contents HASH("ItemGoldIngot")
+select Ingot r0 HASH("ItemCopperIngot") Ingot
+lr r0 dr9 Required HASH("Copper")
+select Ingot r0 HASH("ItemCopperIngot") Ingot
+lr r0 dr9 Contents HASH("Gold")
 slt r0 r0 MINIMUMINGOT
-select IngotNeeded r0 HASH("ItemGoldIngot") IngotNeeded
-lr r0 dr9 Required HASH("ItemGoldIngot")
-select IngotNeeded r0 HASH("ItemGoldIngot") IngotNeeded
-lr r0 dr9 Required HASH("ItemLeadIngot")
-select IngotNeeded r0 HASH("ItemLeadIngot") IngotNeeded
-lr r0 dr9 Required HASH("ItemNickelIngot")
-select IngotNeeded r0 HASH("ItemNickelIngot") IngotNeeded
-lr r0 dr9 Contents HASH("ItemSiliconIngot")
+select Ingot r0 HASH("ItemGoldIngot") Ingot
+lr r0 dr9 Required HASH("Gold")
+select Ingot r0 HASH("ItemGoldIngot") Ingot
+lr r0 dr9 Required HASH("Lead")
+select Ingot r0 HASH("ItemLeadIngot") Ingot
+lr r0 dr9 Required HASH("Nickel")
+select Ingot r0 HASH("ItemNickelIngot") Ingot
+lr r0 dr9 Contents HASH("Silicon")
 slt r0 r0 MINIMUMINGOT
-select IngotNeeded r0 HASH("ItemSiliconIngot") IngotNeeded
-lr r0 dr9 Required HASH("ItemSiliconIngot")
-select IngotNeeded r0 HASH("ItemSiliconIngot") IngotNeeded
-lr r0 dr9 Required HASH("ItemSilverIngot")
-select IngotNeeded r0 HASH("ItemSilverIngot") IngotNeeded
-lr r0 dr9 Required HASH("ItemConstantanIngot")
-select IngotNeeded r0 HASH("ItemConstantanIngot") IngotNeeded
-lr r0 dr9 Required HASH("ItemElectrumIngot")
-select IngotNeeded r0 HASH("ItemElectrumIngot") IngotNeeded
-lr r0 dr9 Required HASH("ItemInvarIngot")
-select IngotNeeded r0 HASH("ItemInvarIngot") IngotNeeded
-lr r0 dr9 Required HASH("ItemSolderIngot")
-select IngotNeeded r0 HASH("ItemSolderIngot") IngotNeeded
-lr r0 dr9 Contents HASH("ItemSteelIngot")
+select Ingot r0 HASH("ItemSiliconIngot") Ingot
+lr r0 dr9 Required HASH("Silicon")
+select Ingot r0 HASH("ItemSiliconIngot") Ingot
+lr r0 dr9 Required HASH("Silver")
+select Ingot r0 HASH("ItemSilverIngot") Ingot
+lr r0 dr9 Required HASH("Constantan")
+select Ingot r0 HASH("ItemConstantanIngot") Ingot
+lr r0 dr9 Required HASH("Electrum")
+select Ingot r0 HASH("ItemElectrumIngot") Ingot
+lr r0 dr9 Required HASH("Invar")
+select Ingot r0 HASH("ItemInvarIngot") Ingot
+lr r0 dr9 Required HASH("Solder")
+select Ingot r0 HASH("ItemSolderIngot") Ingot
+lr r0 dr9 Contents HASH("Steel")
 slt r0 r0 MINIMUMINGOT
-select IngotNeeded r0 HASH("ItemSteelIngot") IngotNeeded
-lr r0 dr9 Required HASH("ItemSteelIngot")
-select IngotNeeded r0 HASH("ItemSteelIngot") IngotNeeded
-lr r0 dr9 Required HASH("ItemAstroloyIngot")
-select IngotNeeded r0 HASH("ItemAstroloyIngot") IngotNeeded
-lr r0 dr9 Required HASH("ItemHastelloyIngot")
-select IngotNeeded r0 HASH("ItemHastelloyIngot") IngotNeeded
-lr r0 dr9 Required HASH("ItemInconelIngot")
-select IngotNeeded r0 HASH("ItemInconelIngot") IngotNeeded
-lr r0 dr9 Required HASH("ItemStelliteIngot")
-select IngotNeeded r0 HASH("ItemStelliteIngot") IngotNeeded
-lr r0 dr9 Required HASH("ItemWaspaloyIngot")
-select IngotNeeded r0 HASH("ItemWaspaloyIngot") IngotNeeded
-beqz IngotNeeded ra
+select Ingot r0 HASH("ItemSteelIngot") Ingot
+lr r0 dr9 Required HASH("Steel")
+select Ingot r0 HASH("ItemSteelIngot") Ingot
+lr r0 dr9 Required HASH("Astroloy")
+select Ingot r0 HASH("ItemAstroloyIngot") Ingot
+lr r0 dr9 Required HASH("Hastelloy")
+select Ingot r0 HASH("ItemHastelloyIngot") Ingot
+lr r0 dr9 Required HASH("Inconel")
+select Ingot r0 HASH("ItemInconelIngot") Ingot
+lr r0 dr9 Required HASH("Stellite")
+select Ingot r0 HASH("ItemStelliteIngot") Ingot
+lr r0 dr9 Required HASH("Waspaloy")
+select Ingot r0 HASH("ItemWaspaloyIngot") Ingot
+beqz Ingot ra
 
-s db Setting IngotNeeded
+s db Setting Ingot
 sb LED Color 5
 move r5 2
 FindIngot:
 ls r0 VendingMachine r5 OccupantHash
-beq r0 IngotNeeded DeliverIngot
+beq r0 Ingot DeliverIngot
 add r5 r5 1
 blt r5 102 FindIngot
-move MissingIngot IngotNeeded
-yield
+sb LED Color 4
+s db Setting Ingot
+sleep 5
 j ra
 
 DeliverIngot:
-seq r1 r9 1 
-sbn DCUTERIGHT HASH("DC:Autolathe") Mode r1
-sbn DCUTELEFT HASH("DC:Autolathe") Mode r1
+seq r1 r9 1
+sbn DCUTERIGHT HASH("DCAutolathe") Mode r1
+sbn DCUTELEFT HASH("DCAutolathe") Mode r1
 seq r1 r9 2
-sbn DCUTERIGHT HASH("DC:PipeBender") Mode r1
-sbn DCUTELEFT HASH("DC:PipeBender") Mode r1
+sbn DCUTERIGHT HASH("DCPipeBender") Mode r1
+sbn DCUTELEFT HASH("DCPipeBender") Mode r1
 seq r1 r9 3
-sbn DCUTERIGHT HASH("DC:Electronics") Mode r1
-sbn DCUTELEFT HASH("DC:Electronics") Mode r1
+sbn DCUTERIGHT HASH("DCElectronics") Mode r1
+sbn DCUTELEFT HASH("DCElectronics") Mode r1
 seq r1 r9 4
-sbn DCUTERIGHT HASH("DC:Tools") Mode r1
-sbn DCUTELEFT HASH("DC:Tools") Mode r1
+sbn DCUTERIGHT HASH("DCTools") Mode r1
+sbn DCUTELEFT HASH("DCTools") Mode r1
 l LastImportCount dr9 ImportCount
 s VendingMachine RequestHash 0
 yield
-s VendingMachine RequestHash IngotNeeded
+s VendingMachine RequestHash Ingot
 
 WaitForDelivery:
+sb LED Color 11
 yield
 l r0 dr9 ImportCount
 beq r0 LastImportCount WaitForDelivery
