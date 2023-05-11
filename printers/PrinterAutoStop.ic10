@@ -1,3 +1,6 @@
+# Semiprime's Printer Autostop
+# See https://github.com/drclaw1188/stationeers_ic10/tree/main/printers for details
+
 alias AutoLathe d0
 alias AutoLatheStacker d1
 alias ElectronicsPrinter d2
