@@ -1,25 +1,15 @@
 alias Hydroponics d0
-alias DaylightSensor d1
 
 alias AverageEfficiency r15
 alias PreviousAverage r14
 alias LightOn r13
 alias ChangeTime r12
 
-define GROWLIGHT -1758710260
-define CHANGEDELAY 300
+define CHANGEDELAY 60
 
 start:
 yield
 
-l r0 DaylightSensor Activate
-beqz r0 nightTime
-jal computeAverage
-s Hydroponics On 0
-sb GROWLIGHT On 0
-j start
-
-nightTime:
 move PreviousAverage AverageEfficiency
 l LightOn Hydroponics On
 jal computeAverage
@@ -31,7 +21,6 @@ move ChangeTime 0
 
 select LightOn LightOn 0 1
 s Hydroponics On LightOn
-sb GROWLIGHT On LightOn
 
 j start
 
