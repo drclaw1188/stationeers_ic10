@@ -11,7 +11,7 @@ The scripts in this directory are used for automating the management of a greenh
 
 ## Greenhouse Master
 
-Maintains an environment in a room. Requires two digital switches (or other devices) that can heat up or cool down the room, and 3 volume pumps (or other devices) that can pump CO2, O2, or nitrogen into the room. Optionally add a flashing light and connect it to the same network, and the chip will activate the light it detects the environment has changed outside of safe ranges.
+Maintains an environment in a room. Requires two digital switches (or other devices) that can heat up or cool down the room, and 3 volume pumps (or other devices) that can pump CO2, O2, or nitrogen into the room. Optionally add a flashing light and connect it to the same network, and the chip will activate the light if it detects the environment has changed outside of safe ranges.
 
 ### Devices
 
