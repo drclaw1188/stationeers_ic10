@@ -1,4 +1,4 @@
-# Scripts for Stationeers printers
+# Scripts for Stationeers Printers
 
 These are the scripts I use for automating printers in Stationeers. I learned and borrowed bits from CowsAreEvil for this, but have developed my own versions. I have separated the various functions out to different chips. The functions are:
 |Function|Description|Script|
