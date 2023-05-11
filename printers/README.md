@@ -1,6 +1,6 @@
 # Scripts for Stationeers printers
 
-These are the scripts I use for automating printers in Stationeers. I learned and borrowed bits from CowsAreEvil for this, but made it my own. I have separated the various functions out to different chips. The functions are:
+These are the scripts I use for automating printers in Stationeers. I learned and borrowed bits from CowsAreEvil for this, but have developed my own versions. I have separated the various functions out to different chips. The functions are:
 |Function|Description|Script|
 | ----------- | ------------- | ------------ |
 |AutoStop|Automatically stops the printer once it has printed out the number of items equal to its attached stacker's setting at the time the print job started.|https://github.com/drclaw1188/stationeers_ic10/blob/main/printers/PrinterAutoStop.ic10|
@@ -10,7 +10,7 @@ The two functions work independently of each other, so you can set up only one o
 
 ## Printer AutoStop
 
-Automatically stops the printer. Printers need to have stackers attached to them and be uniquely labeled. When a new print job is started, the program records the stack size setting on the attched stacker and will stop the printer once the export count increases by that number. The chip only supports three printers, usually the Autolathe, Electronics Printer, and Pipe Bender. This is due to a limitation in the number of pins, and I find I don't use the Tools printer often enough to bother attaching a stacker to it. It might be possible to add support for a Tools printer by making use of the *lbn* and *sbn* IC10 commands. This script also turns the attached stacker on or off to match the current on/off status of its printer.
+Automatically stops the printer. Printers need to have stackers attached to them and the stackers need to be uniquely labeled. When a new print job is started, the program records the stack size setting on the attched stacker and will stop the printer once the export count increases by that number. The chip only supports three printers, usually the Autolathe, Electronics Printer, and Pipe Bender. This is due to a limitation in the number of pins, and I find I don't use the Tools printer often enough to bother attaching a stacker to it. It might be possible to add support for a Tools printer by making use of the *lbn* and *sbn* IC10 commands. This script also turns the attached stacker on or off to match the current on/off status of its printer.
 
 ### Devices
 
@@ -25,7 +25,7 @@ Automatically stops the printer. Printers need to have stackers attached to them
 
 ## Printer Master
 
-Automatically delivers ingots to printers from a vending machine. Keeps a minimum of 50 (by default) of each of iron, copper, gold, silicon, and steel in each printer and will request more once the amount of reagent in the printer goes lower. It delivers all other ingots on demand. It depends on a vending machine that is fed sufficient ingots as required by the printers. Optionally, you can setup a LED light and it will change the color according to its current status:
+Automatically delivers ingots to printers from a vending machine. Keeps a minimum of 50 (by default) of each of iron, copper, gold, silicon, and steel in each printer and will request more once the amount of the reagent in the printer goes lower. It delivers all other ingots on demand. It depends on a vending machine that is fed sufficient ingots as required by the printers. Optionally, you can setup a LED light and it will change the color according to its current status:
 
 |Color|Status|
 | ----------- | ------------- |
@@ -48,7 +48,7 @@ Setup a console with a hash display, and set the hash display to the IC housing 
 
 ### Setup
 
-Connect the input slot of each printer to the output slot of the vending machine via chutes. Use "Chute Digital Flip Flop Splitter" (either the right or left variety) to split the line so that the straight through connection of the digital chute down the line to the rest of the printers and the angled connection to the input slot of the printer. Use the labeler to label each digital chute as follows:
+Connect the input slot of each printer to the output slot of the vending machine via chutes. Use "Chute Digital Flip Flop Splitter" (either the right or left variety) to split the line so that the straight through connection of the digital chute continues down the line to the rest of the printers and the angled connection to connects to the input slot of the printer. Use the labeler to label each digital chute as follows:
 
 |Printer Connected|Chute Name|
 | ----------- | ------------- |
