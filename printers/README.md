@@ -48,7 +48,7 @@ Setup a console with a hash display, and set the hash display to the IC housing 
 
 ### Setup
 
-Connect the input slot of each printer to the output slot of the vending machine via chutes. Use "Chute Digital Flip Flop Splitter" (either the right or left variety) to split the line so that the straight through connection of the digital chute continues down the line to the rest of the printers and the angled connection to connects to the input slot of the printer. Use the labeler to label each digital chute as follows:
+Connect the input slot of each printer to the output slot of the vending machine via chutes. Use "Chute Digital Flip Flop Splitter" (either the right or left variety) to split the line so that the straight through connection of the digital chute continues down the line to the rest of the printers and the angled connection to connects to the input slot of the printer. The digital chutes aren't used as flip flop splitters, the direction the ingot travels is controlled by the IC10 chip. Use the labeler to label each digital chute as follows:
 
 |Printer Connected|Chute Name|
 | ----------- | ------------- |
