@@ -15,8 +15,8 @@ Maintains an environment in a room. Requires two digital switches (or other devi
 
 ### Devices
 
-|Device Name|Device Number|Description|Required?|
-| ----------- | ------------- | ------------ |
+|Device Name|Device Number|Description|Required|
+| ----------- | ------------- | ------------ | ------------ |
 |InsideSensor|d0|A gas sensor inside the room|Yes|
 |OxygenPump|d1|A volume pump or similar to pump oxygen into the room|Yes|
 |NitrogenPump|d2|A volume pump or similar to pump nitrogen into the room|Yes|
@@ -30,6 +30,6 @@ Finds the average of the "Efficiency" values for the plants in all occupied slot
 
 ### Devices
 
-|Device Name|Device Number|Description|Required?|
-| ----------- | ------------- | ------------ |
+|Device Name|Device Number|Description|Required|
+| ----------- | ------------- | ------------ | ------------ |
 |Hydroponics|d0|The hydroponics device|Yes|
