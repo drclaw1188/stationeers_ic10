@@ -1,0 +1,58 @@
+# Register Usage:
+# r0 - r2 : Misc
+# r3 : Current average for current pin
+# r4 : Selects which pin is being looked at
+# r5 - r10 : Previous Averages for pins 0 to 5
+# r11 - r15 : Number of checks for pins 0 to 5
+
+alias AverageEfficiency r3
+
+define CHANGEDELAY 60
+define NUMPINS 2 # Number of pins used minus 1
+
+reset:
+move r4 -1
+
+start:
+yield
+
+bgt r4 NUMPINS reset
+
+add r4 r4 1
+jal computeAverage
+
+add r0 r4 5
+bltal AverageEfficiency rr0 changeLight
+
+move rr0 AverageEfficiency
+j start
+
+changeLight:
+add r1 r4 11
+add rr1 rr1 1
+blt rr1 CHANGEDELAY ra
+move rr1 0
+
+l r2 dr4 On
+select r2 r2 0 1
+s Hydroponics On r2
+
+j ra
+
+computeAverage:
+move r1 3
+move r2 0
+move AverageEfficiency 0
+
+computeLoop:
+ls r0 dr4 r1 Efficiency
+beq r0 -1 computeIgnore
+add AverageEfficiency AverageEfficiency r0
+add r2 r2 1
+computeIgnore:
+sub r1 r1 1
+bgez r1 computeLoop
+div AverageEfficiency AverageEfficiency r2
+s db Setting AverageEfficiency
+
+j ra
