@@ -16,9 +16,8 @@ move r4 -1
 start:
 yield
 
-bgt r4 NUMPINS reset
-
 add r4 r4 1
+bgt r4 NUMPINS reset
 jal computeAverage
 
 add r0 r4 5
@@ -35,7 +34,7 @@ move rr1 0
 
 l r2 dr4 On
 select r2 r2 0 1
-s Hydroponics On r2
+s dr4 On r2
 
 j ra
 
@@ -45,6 +44,7 @@ move r2 0
 move AverageEfficiency 0
 
 computeLoop:
+s db Setting r4
 ls r0 dr4 r1 Efficiency
 beq r0 -1 computeIgnore
 add AverageEfficiency AverageEfficiency r0
@@ -53,6 +53,6 @@ computeIgnore:
 sub r1 r1 1
 bgez r1 computeLoop
 div AverageEfficiency AverageEfficiency r2
-s db Setting AverageEfficiency
+# s db Setting AverageEfficiency
 
 j ra
