@@ -2,7 +2,7 @@
 # is inside a vending machine, and maintains quantities
 # Requires stack pre-programing
 # See https://github.com/drclaw1188/stationeers_ic10/tree/main/VendingMachine for more information
-# Contact me on Discord: notinservice
+# Contact me on Discord: SemiPrime
 
 alias VendingMachine d0
 alias QuantityDisplay d1
