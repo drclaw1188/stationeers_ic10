@@ -32,6 +32,8 @@ yield
 l IngotRequested RequestMem Setting
 l r0 SteelMem Setting
 seq r0 r0 STEEL
+s ControlChute Setting 0
+s ControlChute SettingOutput 0
 s ControlChute Mode r0
 select IngotRequested r0 STEEL IngotRequested
 beqz IngotRequested main
