@@ -1,28 +1,32 @@
 # Semiprime's Printer Master
 # See https://github.com/drclaw1188/stationeers_ic10/tree/main/printers for details
-
 alias VendingMachine d0
 alias Autolathe d1
 alias PipeBender d2
 alias Electronics d3
 alias Tools d4
-
 define MINIMUMINGOT 50
 define LED 1944485013
 define DCUTERIGHT 163728359
 define DCUTELEFT 648608238
-
 alias Ingot r11
-alias LastImportCount r12
 
 start:
 yield
 sb DCUTERIGHT Setting 0
-sb DCUTERIGHT SettingOutput 0
-sb DCUTERIGHT On 1
 sb DCUTELEFT Setting 0
+sb DCUTERIGHT SettingOutput 0
 sb DCUTELEFT SettingOutput 0
+sb DCUTERIGHT On 1
 sb DCUTELEFT On 1
+sbn DCUTERIGHT HASH("DC:Autolathe") Mode 0
+sbn DCUTELEFT HASH("DC:Autolathe") Mode 0
+sbn DCUTERIGHT HASH("DC:PipeBender") Mode 0
+sbn DCUTELEFT HASH("DC:PipeBender") Mode 0
+sbn DCUTERIGHT HASH("DC:Electronics") Mode 0
+sbn DCUTELEFT HASH("DC:Electronics") Mode 0
+sbn DCUTERIGHT HASH("DC:Tools") Mode 0
+sbn DCUTELEFT HASH("DC:Tools") Mode 0
 sb LED Color 2
 move r9 1
 jal CheckPrinter
@@ -86,7 +90,6 @@ select Ingot r0 HASH("ItemStelliteIngot") Ingot
 lr r0 dr9 Required HASH("Waspaloy")
 select Ingot r0 HASH("ItemWaspaloyIngot") Ingot
 beqz Ingot ra
-
 s db Setting Ingot
 sb LED Color 5
 move r5 2
@@ -98,7 +101,6 @@ blt r5 102 FindIngot
 sb LED Color 4
 sleep 5
 j ra
-
 DeliverIngot:
 seq r1 r9 1
 sbn DCUTERIGHT HASH("DC:Autolathe") Mode r1
@@ -112,15 +114,14 @@ sbn DCUTELEFT HASH("DC:Electronics") Mode r1
 seq r1 r9 4
 sbn DCUTERIGHT HASH("DC:Tools") Mode r1
 sbn DCUTELEFT HASH("DC:Tools") Mode r1
-l LastImportCount dr9 ImportCount
+l r2 dr9 ImportCount
 s VendingMachine RequestHash 0
 yield
 s VendingMachine RequestHash Ingot
-
 WaitForDelivery:
 sb LED Color 11
 yield
 l r0 dr9 ImportCount
-beq r0 LastImportCount WaitForDelivery
+beq r0 r2 WaitForDelivery
 yield
 j ra
