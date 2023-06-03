@@ -4,7 +4,6 @@ alias HotPump d0
 alias ColdPump d1
 alias ExhaustPump d2
 alias OverrideLever d3
-
 define FURNACE 545937711
 define EMPTYPRESS 10
 define UNSAFEPRESS 59000
@@ -36,13 +35,11 @@ s ColdPump On r0
 s HotPump On r0
 s ExhaustPump On r0
 beqz IngotHash DisabledMode
-
 sb FURNACE On 1
 sb FURNACE SettingOutput 0
 s ColdPump Setting 0
 s HotPump Setting 0
 s ExhaustPump Setting 0
-
 move sp STACKSIZE
 FindInStack:
 pop r0
@@ -61,8 +58,10 @@ seq r1 r0 IngotHash
 lb r0 FURNACE Reagents Average
 sge r0 r0 MININGOTSTACK
 and r0 r0 r1
-sb FURNACE Open r0
-breqz r0 2
+breqz r0 5
+sb FURNACE Open 1
+yield
+sb FURNACE Open 0
 yield
 select r0 TargetPress TargetPress MaxPress
 bgt CurPress r0 DecreasePress
