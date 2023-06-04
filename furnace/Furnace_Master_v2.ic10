@@ -88,6 +88,7 @@ WaitForMem:
 yield
 l r0 RequestMem Setting
 l r1 VendMem Setting
+seq r1 r1 STEEL
 or r0 r0 r1
 bnez r0 WaitForMem
 j main
