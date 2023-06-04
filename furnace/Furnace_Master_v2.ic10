@@ -2,7 +2,7 @@ alias VendingMachine d0
 alias FurnaceIC d1
 alias ControlChute d2
 alias RequestMem d3
-alias SteelMem d4
+alias VendMem d4
 
 define STACKSIZE 119
 define FURNACE 545937711
@@ -30,7 +30,7 @@ sb LED Color r0
 yield
 
 l IngotRequested RequestMem Setting
-l r0 SteelMem Setting
+l r0 VendMem Setting
 seq r0 r0 STEEL
 s ControlChute Setting 0
 s ControlChute SettingOutput 0
@@ -39,7 +39,6 @@ select IngotRequested r0 STEEL IngotRequested
 beqz IngotRequested main
 
 DispenseOre:
-s db Setting IngotRequested
 move sp STACKSIZE
 findIngot:
 pop Ore3Q
@@ -64,6 +63,9 @@ move OreQuantity Ore3Q
 jal CountOre
 bnez MissingOre main
 
+s db Setting IngotRequested
+s FurnaceIC Setting IngotRequested
+
 sb LED Color 3
 move OreRequested Ore1
 move OreQuantity Ore1Q
@@ -75,7 +77,6 @@ move OreRequested Ore3
 move OreQuantity Ore3Q
 jal VendOre
 
-s FurnaceIC Setting IngotRequested
 lb r0 FURNACE ExportCount Maximum
 WaitForExport:
 yield
@@ -86,6 +87,8 @@ s FurnaceIC Setting 0
 WaitForMem:
 yield
 l r0 RequestMem Setting
+l r1 VendMem Setting
+or r0 r0 r1
 bnez r0 WaitForMem
 j main
 
@@ -113,6 +116,6 @@ brne r1 OreRequested 2
 add r2 r2 1
 add r0 r0 1
 bge r2 OreQuantity ra
-ble r0 102 ContinueChecking
+ble r0 101 ContinueChecking
 move MissingOre OreRequested
 j ra
