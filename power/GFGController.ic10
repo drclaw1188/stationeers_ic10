@@ -1,0 +1,40 @@
+# SemiPrime's GFG controller
+# See https://github.com/drclaw1188/stationeers_ic10/new/main/power for more details
+
+alias GFGSensor d0
+alias GFGCooler d1
+alias EnableSwitch d2
+alias OverrideSwitch d3
+alias BatteryCharge r15
+alias ChamberTemp r14
+alias Charging r13
+
+define BATTERY -1388288459
+define GENREATOR 1165997963
+define MAXTEMP 320
+define MAXCHARGE 0.9
+define MINCHARGE 0.75
+
+move Charging 0
+
+start:
+yield
+
+lb BatteryCharge BATTERY Ratio Average
+l ChamberTemp GFGSensor Temperature
+
+sgt r0 ChamberTemp MAXTEMP
+s GFGCooler On r0
+
+breqz Charging 2
+slt Charging BatteryCharge MAXCHARGE
+brnez Charging 2
+slt Charging BatteryCharge MINCHARGE
+
+l r0 OverrideSwitch Setting
+or Charging Charging r0
+l r0 EnableSwitch Setting
+and Charging Charging r0
+sb GENREATOR On Charging
+
+j start
