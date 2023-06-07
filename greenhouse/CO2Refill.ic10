@@ -1,0 +1,38 @@
+alias PipeSensor d0
+alias Pump d1
+alias Filter db
+
+define PIPEPRESSMAX 2000
+define PIPETEMPMAX 300
+define MINTANKPRESS 1000
+
+define TANK 272136332
+
+start:
+yield
+
+lbn r0 TANK HASH("TANK:CO2") Pressure Maximum
+slt r0 r0 MINTANKPRESS
+beqz r0 start
+
+FillPipe:
+yield
+l r0 PipeSensor Pressure
+slt r0 r0 PIPEPRESSMAX
+s Filter Mode r0
+bnez r0 FillPipe
+
+WaitPipeTemp:
+yield
+l r0 PipeSensor Temperature
+sgt r0 r0 PIPETEMPMAX
+bnez r0 WaitPipeTemp
+
+EmptyPipe:
+yield
+l r0 PipeSensor Pressure
+sgtz r0 r0
+s Pump On r0
+bnez r0 EmptyPipe
+
+j start
