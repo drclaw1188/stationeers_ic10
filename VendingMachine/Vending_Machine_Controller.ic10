@@ -1,6 +1,4 @@
-# This script displays how much of each thing listed
-# is inside a vending machine, and maintains quantities
-# Requires stack pre-programing
+# This script displays how much of a thing is inside a vending machine, and maintains quantities. Requires stack preprograming
 # See https://github.com/drclaw1188/stationeers_ic10/tree/main/VendingMachine for more information
 # Contact me on Discord: SemiPrime
 
@@ -10,11 +8,9 @@ alias UsedSlotsDisplay d2
 alias Dial d3
 alias ItemRequest d4 # Optional
 alias OutputSorter d5 # Optional
-
 define STACKSIZE 48 # Change to size of stack
 define FIRSTSLOT 1
 define LASTSLOT 101
-
 alias curItem r8
 alias curCount r9
 alias curMin r10
@@ -31,8 +27,8 @@ CountObjects:
 yield
 move SlotToCheck FIRSTSLOT
 move UsedSlots 0
-s QuantityDisplay Color 5
-s UsedSlotsDisplay Color 5
+s QuantityDisplay Color Color.Yellow
+s UsedSlotsDisplay Color Color.Yellow
 move sp STACKSIZE
 sub sp sp 4
 ZeroCount:
@@ -73,20 +69,21 @@ brdns OutputSorter 2
 bgt curCount curMax RemoveOne
 j CheckInventory
 RequestMore:
-s QuantityDisplay Color 4
-s UsedSlotsDisplay Color 4
+s QuantityDisplay Color Color.Red
+s UsedSlotsDisplay Color Color.Red
 l LastImportCount VendingMachine ImportCount
 s ItemRequest Setting curItem
 WaitForImport:
 yield
+jal UpdateDisplay
 l r0 VendingMachine ImportCount
 beq r0 LastImportCount WaitForImport
 move LastImportCount r0
 s ItemRequest Setting 0
 j CountObjects
 RemoveOne:
-s QuantityDisplay Color 3
-s UsedSlotsDisplay Color 3
+s QuantityDisplay Color Color.Orange
+s UsedSlotsDisplay Color Color.Orange
 l LastExportCount VendingMachine ExportCount
 brdns OutputSorter 2
 s OutputSorter Output 1
@@ -95,10 +92,22 @@ yield
 s VendingMachine RequestHash curItem
 WaitForExport:
 yield
+jal UpdateDisplay
 l r0 VendingMachine ExportCount
 beq r0 LastExportCount WaitForExport
 move LastExportCount r0
 j CountObjects
+
+UpdateDisplay:
+l sp Dial Setting
+add sp sp 1
+mul sp sp 4
+pop curItem
+sub sp sp 2
+pop curCount
+s db Setting curItem
+s QuantityDisplay Setting curCount
+j ra
 
 main:
 yield
@@ -112,14 +121,7 @@ or r1 r1 r2
 bnez r1 CountObjects
 brdns OutputSorter 2
 s OutputSorter Output 0
-s QuantityDisplay Color 2
-s UsedSlotsDisplay Color 2
-l sp Dial Setting
-add sp sp 1
-mul sp sp 4
-pop curItem
-sub sp sp 2
-pop curCount
-s db Setting curItem
-s QuantityDisplay Setting curCount
+s QuantityDisplay Color Color.Green
+s UsedSlotsDisplay Color Color.Green
+jal UpdateDisplay
 j main
