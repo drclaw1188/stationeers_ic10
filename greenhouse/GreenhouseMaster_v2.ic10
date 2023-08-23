@@ -1,0 +1,96 @@
+alias InsideSensor d0
+alias OxygenPump d1
+alias NitrogenPump d2
+alias CO2Pump d3
+alias HeatingSwitch d4
+alias WaterSensor d5
+# alias CoolingSwitch d5
+
+alias OxygenPercent r15
+alias CO2Percent r14
+alias InsidePressure r13
+alias InsideTemp r12
+alias WaterPress r11
+alias WaterTemp r10
+
+define MINO2 0.3
+define MINCO2 0.03
+define MINPRESS 80
+define MINTEMP 295
+define MAXTEMP 305
+
+define FLASHINGLIGHT -1535893860
+define CANSTORE 1632165346
+define VOLPUMP -321403609
+define PRESREG 209854039
+
+define MAXCANPRES 17500
+define ALARMVOLATILES 0.05
+define ALARMPOLLUTANTS 0.05
+define ALARMOXYGEN 0.25
+define ALARMCO2 0.01
+define ALARMCOLD 280
+define ALARMHOT 315
+define ALARMHIGHPRESS 120
+define ALARMLOWPRESS 40
+define ALARMLOWWATERPRESS 5
+
+start:
+yield
+
+l OxygenPercent InsideSensor RatioOxygen
+l CO2Percent InsideSensor RatioCarbonDioxide
+l InsidePressure InsideSensor Pressure
+l InsideTemp InsideSensor Temperature
+l WaterPress WaterSensor Pressure
+l WaterTemp WaterSensor Temperature
+
+slt r0 InsideTemp MINTEMP
+s HeatingSwitch On r0
+
+# sgt r0 InsideTemp MAXTEMP
+# s CoolingSwitch On r0
+
+slt r0 OxygenPercent MINO2
+s OxygenPump On r0
+
+slt r0 CO2Percent MINCO2
+s CO2Pump On r0
+
+slt r0 InsidePressure MINPRESS
+s NitrogenPump On r0
+
+l r0 InsideSensor RatioVolatiles
+sgt r0 r0 ALARMVOLATILES
+l r1 InsideSensor RatioPollutant
+sgt r1 r1 ALARMPOLLUTANTS
+or r0 r0 r1
+slt r1 OxygenPercent ALARMOXYGEN
+or r0 r0 r1
+slt r1 CO2Percent ALARMCO2
+or r0 r0 r1
+sgt r1 InsideTemp ALARMHOT
+or r0 r0 r1
+slt r1 InsideTemp ALARMCOLD
+or r0 r0 r1
+sgt r1 InsidePressure ALARMHIGHPRESS
+or r0 r0 r1
+slt r1 InsidePressure ALARMLOWPRESS
+or r0 r0 r1
+slt r1 WaterPress ALARMLOWWATERPRESS
+or r0 r0 r1
+sgt r1 WaterTemp ALARMHOT
+or r0 r0 r1
+slt r1 WaterTemp ALARMCOLD
+or r0 r0 r1
+sb FLASHINGLIGHT On r0
+
+lbn r0 CANSTORE HASH("GTS:Oxygen") Pressure Maximum
+slt r0 r0 MAXCANPRES
+sbn PRESREG HASH("GPR:Oxygen") On r0
+
+lbn r0 CANSTORE HASH("GTS:Waste") Pressure Maximum
+sgtz r0 r0
+sbn VOLPUMP HASH("GVP:Waste") On r0
+
+j start
