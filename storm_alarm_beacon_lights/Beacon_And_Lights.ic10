@@ -1,6 +1,7 @@
 alias ProximitySensor d0
 alias WeatherStation d1
 alias WeatherTimeLED d2
+alias WeatherTransmitter d3
 
 define BEACON -188177083
 define FLASHINGLIGHTS -1535893860
@@ -14,6 +15,7 @@ sb BEACON On r0
 
 l r0 WeatherStation Mode
 sb FLASHINGLIGHTS On r0
+s WeatherTransmitter Setting r0
 
 l r0 WeatherStation NextWeatherEventTime
 s WeatherTimeLED Setting r0
